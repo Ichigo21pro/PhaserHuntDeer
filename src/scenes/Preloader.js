@@ -36,7 +36,9 @@ export class Preloader extends Scene {
 
     //this.load.spritesheet('dude', 'dude.png', { frameWidth: 32, frameHeight: 48 });
 
-    //this.load.atlas('atlas', 'atlas.png', 'atlas.json');
+    this.load.atlas('atlas', 'atlas.png', 'atlas.json');
+
+    this.load.spritesheet('rifle', 'rifle_V03.png', { frameWidth: 647, frameHeight: 732 });
   }
 
   create() {

@@ -6,6 +6,11 @@ var scoreText;
 var fondo;
 var scoreTime;
 var tiempo = 0;
+///
+var visualizarSangre = true;
+var ciervosMatar = 3;
+var cantidadBalas = 3;
+var cargadorBalas = 1;
 
 export class Game extends Scene {
   constructor() {
@@ -14,10 +19,6 @@ export class Game extends Scene {
 
   ///////////// CREATE ///////////
   create() {
-    //  A simple background for our game
-    fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'backGround');
-    fondo.setDisplaySize(this.scale.gameSize.width, this.scale.gameSize.height);
-
     //  The platforms group contains the ground and the 2 ledges we can jump on
 
     //  Input Events
@@ -25,23 +26,128 @@ export class Game extends Scene {
     //cursors.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     //cursors.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     //cursors.B = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+    //
+    // Añadimos los corazones
+    /*
+    corazones = this.add.group();
+    corazones.create(this.scale.gameSize.width - 40, 20, 'atlas', 'bullet_small.png').setOrigin(1, 0);
+    corazones.create(this.scale.gameSize.width - 70, 20, 'atlas', 'bullet_small.png').setOrigin(1, 0);
+    corazones.create(this.scale.gameSize.width - 100, 20, 'atlas', 'bullet_small.png').setOrigin(1, 0);
+    */
+    //
+    //
+    //  A simple background for our game
+    fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'backGround');
+    fondo.setDisplaySize(this.scale.gameSize.width, this.scale.gameSize.height);
 
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
 
-    // Añadimos los corazones
-    /*
-    corazones = this.add.group();
-    corazones.create(this.scale.gameSize.width - 40, 20, 'atlas', 'heart.png').setOrigin(1, 0);
-    corazones.create(this.scale.gameSize.width - 70, 20, 'atlas', 'heart.png').setOrigin(1, 0);
-    corazones.create(this.scale.gameSize.width - 100, 20, 'atlas', 'heart.png').setOrigin(1, 0);
-    */
+    //////
+    // Añadir el sprite del rifle encima de la barra marrón, en la esquina superior derecha
+    const rifle = this.add
+      .sprite(this.scale.gameSize.width - 10, 10, 'rifle')
+      .setOrigin(1, -0.96)
+      .setScale(0.5);
+    rifle.setInteractive(); // Hacer que el sprite del rifle sea interactivo
+
+    // Configurar la animación del rifle //
+    this.anims.create({
+      key: 'fire',
+      frames: this.anims.generateFrameNumbers('rifle', { start: 0, end: 1 }),
+      frameRate: 10,
+      repeat: 0, // La animación se reproduce una vez
+    });
+    this.anims.create({
+      key: 'recolocateRifle',
+      frames: this.anims.generateFrameNumbers('rifle', { start: 1, end: 0 }),
+      frameRate: 10,
+      repeat: 0, // La animación se reproduce una vez
+    });
+    ///////////////////////////////////////
+
+    // Añadir una barra marrón en la parte inferior
+    const brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 100, 0x8b4513);
+    brownBar.setOrigin(0.5, 1); // Establecer el origen en la parte inferior
+
+    // Añadir botón 1 a la barra marrón
+    const button1 = this.add
+      .image(100, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Reload.png')
+      .setOrigin(0.5, 0.2)
+      .setInteractive();
+    button1.on('pointerdown', () => {
+      console.log('Botón Reload clicado');
+    });
+    const buttonText1 = this.add.text(button1.x, button1.y, 'Recargar', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(0, -0.2);
+
+    // Añadir botón 2 a la barra marrón
+    const button2 = this.add
+      .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
+      .setOrigin(0.9, -0.1)
+      .setInteractive();
+    button2.on('pointerdown', () => {
+      console.log('Botón Para ver sangre clicado');
+    });
+    const buttonText2 = this.add.text(button1.x, button1.y, 'VIEWBLOOD', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-1.7, -0.4);
+
+    // Añadir botón 3 a la barra marrón
+    const button3 = this.add
+      .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
+      .setOrigin(-0.2, -0.1)
+      .setInteractive();
+    button2.on('pointerdown', () => {
+      console.log('Botón Para Recargar');
+    });
+    const buttonText3 = this.add.text(button1.x, button1.y, 'RELOAD', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-4.5, -0.4);
+
+    // Añadir botón 4 a la barra marrón
+    const button4 = this.add
+      .image(this.scale.gameSize.width - 100, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Continue.png')
+      .setOrigin(0.5, 0.1)
+      .setInteractive();
+    // Crear las imágenes de las balas
+    const bullet1 = this.add.sprite(button3.x - 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    const bullet2 = this.add.sprite(button3.x, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    const bullet3 = this.add.sprite(button3.x + 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    button3.on('pointerdown', () => {
+      console.log('Balas');
+
+      // Añadir las imágenes de las balas al botón
+      button3.bullets = [bullet1, bullet2, bullet3];
+
+      if (cantidadBalas > 0) {
+        // Verificar si hay balas disponibles
+        // Disminuir la cantidad de balas
+        cantidadBalas--;
+      } else {
+        console.log('No hay balas disponibles');
+      }
+    });
+    ////////////////////
+
+    // Añadir evento de clic del ratón para iniciar la animación del rifle
+    this.input.on('pointerdown', (pointer) => {
+      // Verificar si el clic está por encima de la barra marrón
+      if (pointer.y < this.scale.gameSize.height - 100) {
+        // Si el clic está por encima de la barra marrón, iniciar la animación del rifle
+        rifle.anims.play('fire'); // Iniciar la animación del rifle
+
+        // Agregar un retraso antes de iniciar la animación de recolocación
+        setTimeout(() => {
+          rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
+        }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
+      }
+
+      ///
+      // posible mejora que no se pueda spamear
+      ///
+    });
 
     /////////////////
     // Añadir un evento de clic del ratón para cambiar a la escena de Gameover
     this.input.on('pointerdown', () => {
-      this.gameOver();
+      //this.gameOver();
     });
     ////////////////
   }
