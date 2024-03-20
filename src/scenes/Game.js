@@ -1,20 +1,11 @@
 import { Scene } from 'phaser';
 
-var player;
-var stars;
-var bombs;
-var bombs2;
-var platforms;
-var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
 var fondo;
 var scoreTime;
 var tiempo = 0;
-var corazones;
-var nextBombTime = 0;
-var invulnerable = false;
 
 export class Game extends Scene {
   constructor() {
@@ -24,7 +15,7 @@ export class Game extends Scene {
   ///////////// CREATE ///////////
   create() {
     //  A simple background for our game
-    fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'sky');
+    fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'backGround');
     fondo.setDisplaySize(this.scale.gameSize.width, this.scale.gameSize.height);
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
