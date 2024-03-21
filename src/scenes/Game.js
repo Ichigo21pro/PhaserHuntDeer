@@ -293,6 +293,7 @@ export class Game extends Scene {
     if (gameOver) {
       return;
     }
+    this.actualizarCiervos();
 
     /*if (cursors.B.isDown) {
       //this.create2Bomb();
@@ -426,6 +427,8 @@ export class Game extends Scene {
         } else if (numeroAleatorio === 3 && cantidadBalas > 0) {
           console.log('vaya tiro!!! le has dado sin apuntar???');
           this.eliminarCiervo(pointer);
+          score += 20;
+          scoreText.setText('Score: ' + score);
 
           // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
           setTimeout(() => {
@@ -434,6 +437,8 @@ export class Game extends Scene {
         }
       } else {
         this.eliminarCiervo(pointer);
+        score += 10;
+        scoreText.setText('Score: ' + score);
         // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
         setTimeout(() => {
           ciervo.destroy();
@@ -464,7 +469,9 @@ export class Game extends Scene {
       // Actualizar el texto que muestra la cantidad de ciervos restantes
       this.actualizarTextoCiervos();
     }
-    ciervoExiste = false;
+    setTimeout(() => {
+      ciervoExiste = false;
+    }, 1500);
   }
 
   //////////////////// GAME OVER /////////////////
@@ -473,5 +480,17 @@ export class Game extends Scene {
     this.scene.start('GameOver', { score: score, tiempo: this.tiempoFormateado });
     tiempo = 0;
     score = 0;
+  }
+  ///////////// actualizar ciervos /////
+  actualizarCiervos() {
+    if (!ciervoExiste) {
+      this.crearCiervo(100, 400, 0.2);
+      ciervoExiste = true;
+    }
+    // Asegurar que el scope esté por encima del ciervo
+    this.scope.setDepth(2);
+
+    // Asegurar que las partículas estén por encima del ciervo pero por debajo del scope
+    emitter.setDepth(1);
   }
 }
