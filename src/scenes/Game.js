@@ -74,11 +74,11 @@ export class Game extends Scene {
     // Detectar la tecla B presionada
     const keyB = this.input.keyboard.addKey('B');
     keyB.on('down', () => {
-      if (true) {
-        // Oscurecer la pantalla
-      } else {
-        // Eliminar el oscurecimiento
-      }
+      apuntar = true;
+      console.log('estas apuntando');
+    });
+    keyB.off('up', () => {
+      apuntar = false;
     });
     //////////////
 
@@ -204,10 +204,6 @@ export class Game extends Scene {
       ///
     });
     //////////
-    if (!ciervoExiste) {
-      this.crearCiervo(100, 400, 0.2);
-      ciervoExiste = true;
-    }
 
     ///////
     //particulas
@@ -427,7 +423,7 @@ export class Game extends Scene {
         } else if (numeroAleatorio === 3 && cantidadBalas > 0) {
           console.log('vaya tiro!!! le has dado sin apuntar???');
           this.eliminarCiervo(pointer);
-          score += 20;
+          score += 33;
           scoreText.setText('Score: ' + score);
 
           // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
@@ -437,7 +433,7 @@ export class Game extends Scene {
         }
       } else {
         this.eliminarCiervo(pointer);
-        score += 10;
+        score += 20;
         scoreText.setText('Score: ' + score);
         // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
         setTimeout(() => {
