@@ -1,292 +1,292 @@
 {
-  "textures": [
-    {
-      "image": "atlas",
-      "format": "RGBA8888",
-      "size": {
-        "w": 1238,
-        "h": 2047
-      },
-      "scale": 1,
-      "frames": [
-        {
-          "filename": "bg_tree_front.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 452,
-            "h": 720
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 452,
-            "h": 720
-          },
-          "frame": {
-            "x": 0,
-            "y": 0,
-            "w": 452,
-            "h": 720
-          }
-        },
-        {
-          "filename": "bg_tree_back.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 469,
-            "h": 518
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 469,
-            "h": 518
-          },
-          "frame": {
-            "x": 0,
-            "y": 720,
-            "w": 469,
-            "h": 518
-          }
-        },
-        {
-          "filename": "deer.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 386,
-            "h": 454
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 386,
-            "h": 454
-          },
-          "frame": {
-            "x": 452,
-            "y": 0,
-            "w": 386,
-            "h": 454
-          }
-        },
-        {
-          "filename": "logo.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 390,
-            "h": 176
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 390,
-            "h": 176
-          },
-          "frame": {
-            "x": 452,
-            "y": 454,
-            "w": 390,
-            "h": 176
-          }
-        },
-        {
-          "filename": "ui_button_Reload.png",
-          "rotated": false,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 360,
-            "h": 79
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 1,
-            "w": 360,
-            "h": 78
-          },
-          "frame": {
-            "x": 452,
-            "y": 630,
-            "w": 360,
-            "h": 78
-          }
-        },
-        {
-          "filename": "scope.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 400,
-            "h": 407
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 400,
-            "h": 407
-          },
-          "frame": {
-            "x": 838,
-            "y": 0,
-            "w": 400,
-            "h": 407
-          }
-        },
-        {
-          "filename": "bullet_large.png",
-          "rotated": true,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 46,
-            "h": 116
-          },
-          "spriteSourceSize": {
-            "x": 2,
-            "y": 1,
-            "w": 43,
-            "h": 115
-          },
-          "frame": {
-            "x": 838,
-            "y": 407,
-            "w": 43,
-            "h": 115
-          }
-        },
-        {
-          "filename": "tap_to_shoot.png",
-          "rotated": true,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 370,
-            "h": 208
-          },
-          "spriteSourceSize": {
-            "x": 13,
-            "y": 26,
-            "w": 350,
-            "h": 161
-          },
-          "frame": {
-            "x": 0,
-            "y": 1238,
-            "w": 350,
-            "h": 161
-          }
-        },
-        {
-          "filename": "dog.png",
-          "rotated": true,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 295,
-            "h": 292
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 295,
-            "h": 290
-          },
-          "frame": {
-            "x": 0,
-            "y": 1588,
-            "w": 295,
-            "h": 290
-          }
-        },
-        {
-          "filename": "ui_button_Replay.png",
-          "rotated": true,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 164,
-            "h": 54
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 164,
-            "h": 54
-          },
-          "frame": {
-            "x": 0,
-            "y": 1883,
-            "w": 164,
-            "h": 54
-          }
-        },
-        {
-          "filename": "ui_button_Continue.png",
-          "rotated": true,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 148,
-            "h": 53
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 148,
-            "h": 53
-          },
-          "frame": {
-            "x": 54,
-            "y": 1883,
-            "w": 148,
-            "h": 53
-          }
-        },
-        {
-          "filename": "bullet_small.png",
-          "rotated": false,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 23,
-            "h": 58
-          },
-          "spriteSourceSize": {
-            "x": 1,
-            "y": 0,
-            "w": 22,
-            "h": 58
-          },
-          "frame": {
-            "x": 107,
-            "y": 1883,
-            "w": 22,
-            "h": 58
-          }
-        },
-        {
-          "filename": "bloodP.png",
-          "rotated": false,
-          "trimmed": true,
-          "sourceSize": {
-            "w": 21,
-            "h": 29
-          },
-          "spriteSourceSize": {
-            "x": 1,
-            "y": 1,
-            "w": 19,
-            "h": 27
-          },
-          "frame": {
-            "x": 107,
-            "y": 1941,
-            "w": 19,
-            "h": 27
-          }
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "app": "http://free-tex-packer.com",
-    "version": "0.6.7"
-  }
+	"textures": [
+		{
+			"image": "atlas",
+			"format": "RGBA8888",
+			"size": {
+				"w": 2047,
+				"h": 1238
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "bg_tree_front.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 452,
+						"h": 720
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 452,
+						"h": 720
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 452,
+						"h": 720
+					}
+				},
+				{
+					"filename": "bg_tree_back.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 469,
+						"h": 518
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 469,
+						"h": 518
+					},
+					"frame": {
+						"x": 0,
+						"y": 720,
+						"w": 469,
+						"h": 518
+					}
+				},
+				{
+					"filename": "deer.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 386,
+						"h": 454
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 386,
+						"h": 454
+					},
+					"frame": {
+						"x": 452,
+						"y": 0,
+						"w": 386,
+						"h": 454
+					}
+				},
+				{
+					"filename": "logo.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 390,
+						"h": 176
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 390,
+						"h": 176
+					},
+					"frame": {
+						"x": 452,
+						"y": 454,
+						"w": 390,
+						"h": 176
+					}
+				},
+				{
+					"filename": "ui_button_Reload.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 360,
+						"h": 79
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 360,
+						"h": 78
+					},
+					"frame": {
+						"x": 452,
+						"y": 630,
+						"w": 360,
+						"h": 78
+					}
+				},
+				{
+					"filename": "scope.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 400,
+						"h": 407
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 400,
+						"h": 407
+					},
+					"frame": {
+						"x": 838,
+						"y": 0,
+						"w": 400,
+						"h": 407
+					}
+				},
+				{
+					"filename": "bloodP.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 21,
+						"h": 29
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 19,
+						"h": 27
+					},
+					"frame": {
+						"x": 838,
+						"y": 407,
+						"w": 19,
+						"h": 27
+					}
+				},
+				{
+					"filename": "tap_to_shoot.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 370,
+						"h": 208
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 26,
+						"w": 350,
+						"h": 161
+					},
+					"frame": {
+						"x": 1238,
+						"y": 0,
+						"w": 350,
+						"h": 161
+					}
+				},
+				{
+					"filename": "dog.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 295,
+						"h": 292
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 295,
+						"h": 290
+					},
+					"frame": {
+						"x": 1588,
+						"y": 0,
+						"w": 295,
+						"h": 290
+					}
+				},
+				{
+					"filename": "ui_button_Replay.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 164,
+						"h": 54
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 164,
+						"h": 54
+					},
+					"frame": {
+						"x": 1883,
+						"y": 0,
+						"w": 164,
+						"h": 54
+					}
+				},
+				{
+					"filename": "ui_button_Continue.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 148,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 148,
+						"h": 53
+					},
+					"frame": {
+						"x": 1883,
+						"y": 54,
+						"w": 148,
+						"h": 53
+					}
+				},
+				{
+					"filename": "bullet_large.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 46,
+						"h": 116
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 43,
+						"h": 115
+					},
+					"frame": {
+						"x": 1883,
+						"y": 107,
+						"w": 43,
+						"h": 115
+					}
+				},
+				{
+					"filename": "bullet_small.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 23,
+						"h": 58
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 0,
+						"w": 22,
+						"h": 58
+					},
+					"frame": {
+						"x": 1926,
+						"y": 107,
+						"w": 22,
+						"h": 58
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
 }

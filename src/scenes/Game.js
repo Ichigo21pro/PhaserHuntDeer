@@ -1,8 +1,7 @@
 import { Scene } from 'phaser';
 
-var score = 0;
 var gameOver = false;
-var scoreText;
+
 var fondo;
 var scoreTime;
 var tiempo = 0;
@@ -11,7 +10,7 @@ var visualizarSangre = true;
 var ciervosMatar = 3;
 var cantidadBalas = 3;
 var cargadorBalas = 1;
-var tutorial = false;
+var tutorial = true;
 //
 var bullet1;
 var bullet2;
@@ -25,6 +24,7 @@ var button3;
 var ciervoExiste = false;
 var rifle;
 var brownBar;
+//
 
 export class Game extends Scene {
   constructor() {
@@ -63,7 +63,7 @@ export class Game extends Scene {
 
     //////
     //  The score
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
     scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
     //////////
 
@@ -290,13 +290,30 @@ export class Game extends Scene {
     if (gameOver) {
       return;
     }
-    this.actualizarCiervos();
+
+    if (tutorial) {
+      this.tutorial();
+    } else {
+      this.actualizarCiervos();
+    }
 
     /*if (cursors.B.isDown) {
       //this.create2Bomb();
     }*/
     if (this.scope.visible) {
       this.scope.setPosition(this.input.mousePointer.x, this.input.mousePointer.y);
+    }
+
+    if (cantidadBalas == 0 && cargadorBalas == 0 && ciervosMatar > 0) {
+      console.log('vaya as perdido');
+      setTimeout(() => {
+        this.gameOver();
+      }, 1500);
+    } else if (ciervosMatar <= 0) {
+      console.log('has ganado');
+      setTimeout(() => {
+        this.gameOver();
+      }, 1500);
     }
 
     this.tiempoReal(deltaTime);
@@ -424,22 +441,17 @@ export class Game extends Scene {
         } else if (numeroAleatorio === 3 && cantidadBalas > 0) {
           console.log('vaya tiro!!! le has dado sin apuntar???');
           this.eliminarCiervo(pointer);
-          score += 33;
-          scoreText.setText('Score: ' + score);
 
           // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
-          setTimeout(() => {
-            ciervo.destroy();
-          }, 1000); // 1000 milisegundos = 1 segundo
+
+          ciervo.destroy();
         }
       } else if (cantidadBalas > 0) {
         this.eliminarCiervo(pointer);
-        score += 20;
-        scoreText.setText('Score: ' + score);
+
         // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
-        setTimeout(() => {
-          ciervo.destroy();
-        }, 1000); // 1000 milisegundos = 1 segundo
+
+        ciervo.destroy();
       }
     });
   }
@@ -474,9 +486,13 @@ export class Game extends Scene {
   //////////////////// GAME OVER /////////////////
   gameOver() {
     // Cambiar a la escena de Gameover y pasar la puntuación y el tiempo como datos
-    this.scene.start('GameOver', { score: score, tiempo: this.tiempoFormateado });
+    this.scene.start('GameOver', { tiempo: this.tiempoFormateado });
     tiempo = 0;
-    score = 0;
+
+    cargadorBalas = 1;
+    cantidadBalas = 3;
+    ciervosMatar = 3;
+    tutorial = true;
   }
   ///////////// actualizar ciervos /////
   actualizarCiervos() {
@@ -510,5 +526,34 @@ export class Game extends Scene {
     // Asegurar que las partículas estén por encima del ciervo pero por debajo del scope
     emitter.setDepth(1);
     // Asegurar que el sprite del rifle esté por encima de los demás elementos
+  }
+  ///////////////TUTORIAL/////////////
+  tutorial() {
+    const ciervo = this.add.image(850, 350, 'deer').setInteractive({ pixelPerfect: true });
+    // Añadir la imagen 'tap_to_shoot' desde el atlas
+    const tapToShoot = this.add.image(900, 360, 'atlas', 'tap_to_shoot.png');
+    ciervo.setScale(0.3);
+    tapToShoot.setScale(0.5); // Puedes ajustar el valor según tu preferencia
+    tapToShoot.setDepth(1);
+    this.crearCiervo(850, 350, 0.3);
+
+    ciervoExiste = true;
+    tutorial = false;
+
+    // Añadir evento de clic del ratón para iniciar la animación del rifle
+    this.input.on('pointerdown', (pointer) => {
+      if (cantidadBalas <= 0) {
+      } else {
+        // Verificar si el clic está por encima de la barra marrón
+        if (pointer.y < this.scale.gameSize.height - 100) {
+          // Destruir las imágenes ciervo y tapToShoot después de ejecutar el evento pointerdown
+          ciervo.destroy();
+          tapToShoot.destroy();
+        }
+      }
+      // Detectar la tecla B presionada
+      keyB.on('down', () => {});
+      tutorial = false;
+    });
   }
 }
