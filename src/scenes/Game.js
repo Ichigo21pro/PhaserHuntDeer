@@ -11,6 +11,14 @@ var visualizarSangre = true;
 var ciervosMatar = 3;
 var cantidadBalas = 3;
 var cargadorBalas = 1;
+var tutorial = false;
+//
+var bullet1;
+var bullet2;
+var bullet3;
+var scope;
+//
+var emitter;
 
 export class Game extends Scene {
   constructor() {
@@ -78,6 +86,15 @@ export class Game extends Scene {
       .setInteractive();
     button1.on('pointerdown', () => {
       console.log('Botón Reload clicado');
+
+      if (cargadorBalas > 0) {
+        cantidadBalas = 3;
+        cargadorBalas--;
+        console.log('has recargado');
+        this.verBalas();
+      } else {
+        console.log('no tienes cargador');
+      }
     });
     const buttonText1 = this.add.text(button1.x, button1.y, 'Recargar', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(0, -0.2);
 
@@ -97,9 +114,9 @@ export class Game extends Scene {
       .setOrigin(-0.2, -0.1)
       .setInteractive();
     button2.on('pointerdown', () => {
-      console.log('Botón Para Recargar');
+      console.log('Botón Para ver ciervos a los que matar');
     });
-    const buttonText3 = this.add.text(button1.x, button1.y, 'RELOAD', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-4.5, -0.4);
+    const buttonText3 = this.add.text(button1.x, button1.y, 'Ciervos = ' + ciervosMatar, { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-3.15, -0.4);
 
     // Añadir botón 4 a la barra marrón
     const button4 = this.add
@@ -107,22 +124,14 @@ export class Game extends Scene {
       .setOrigin(0.5, 0.1)
       .setInteractive();
     // Crear las imágenes de las balas
-    const bullet1 = this.add.sprite(button3.x - 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
-    const bullet2 = this.add.sprite(button3.x, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
-    const bullet3 = this.add.sprite(button3.x + 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    bullet1 = this.add.sprite(button3.x - 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    bullet2 = this.add.sprite(button3.x, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
+    bullet3 = this.add.sprite(button3.x + 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(-17.5, 0.2);
     button3.on('pointerdown', () => {
       console.log('Balas');
 
       // Añadir las imágenes de las balas al botón
-      button3.bullets = [bullet1, bullet2, bullet3];
-
-      if (cantidadBalas > 0) {
-        // Verificar si hay balas disponibles
-        // Disminuir la cantidad de balas
-        cantidadBalas--;
-      } else {
-        console.log('No hay balas disponibles');
-      }
+      button4.bullets = [bullet1, bullet2, bullet3];
     });
     ////////////////////
 
@@ -132,7 +141,15 @@ export class Game extends Scene {
       if (pointer.y < this.scale.gameSize.height - 100) {
         // Si el clic está por encima de la barra marrón, iniciar la animación del rifle
         rifle.anims.play('fire'); // Iniciar la animación del rifle
-
+        cantidadBalas--;
+        /////
+        // Verificar la cantidad de balas y ocultar las imágenes correspondientes
+        this.verBalas();
+        /////
+        console.log('se resto una bala');
+        if (cantidadBalas <= 0) {
+          console.log('no te quedan balas');
+        }
         // Agregar un retraso antes de iniciar la animación de recolocación
         setTimeout(() => {
           rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
@@ -143,7 +160,62 @@ export class Game extends Scene {
       // posible mejora que no se pueda spamear
       ///
     });
+    //////////
+    this.crearCiervo(100, 400, 0.2);
+    ///////
+    //particulas
+    emitter = this.add.particles(400, 250, 'flares', {
+      frame: ['bloodParticle'],
+      lifespan: 4000,
+      speed: { min: 150, max: 250 },
+      scale: { start: 0.8, end: 0 },
+      gravityY: 150,
+      blendMode: 'ADD',
+      emitting: false,
+    });
 
+    ////
+
+    // Añadir la imagen del scope una vez en el método create
+    this.scope = this.add.image(0, 0, 'atlas', 'scope.png').setOrigin(0.5);
+
+    // Establecer la escala de la imagen del scope
+    this.scope.setScale(0.3);
+
+    // Ocultar el scope al principio
+    this.scope.setVisible(false);
+
+    // Detectar movimiento del ratón
+    this.input.on('pointermove', (pointer) => {
+      // Mostrar el scope y actualizar su posición al mover el ratón
+      this.scope.setVisible(true);
+      this.scope.setPosition(pointer.x, pointer.y);
+    });
+    ///////////////////////////
+
+    ////////////////////////////
+
+    /*// Definir los límites de movimiento del rifle
+    const minX = 950; // Límite izquierdo
+    const maxX = 1020; // Límite derecho
+
+    const halfScreenWidth = this.scale.gameSize.width / 2; // Obtener la mitad del ancho de la pantalla
+
+    this.input.on('pointermove', (pointer) => {
+      let cursorX = Phaser.Math.Clamp(pointer.x, minX, maxX); // Limitar el cursor dentro de los límites X por defecto
+
+      // Verificar si el cursor está en la mitad izquierda de la pantalla
+      if (pointer.x < halfScreenWidth) {
+        // Mover el rifle hacia la izquierda dentro de los límites minX
+        cursorX = Phaser.Math.Clamp(pointer.x, minX, rifle.x);
+      } else {
+        // Mover el rifle hacia la derecha dentro de los límites maxX
+        cursorX = Phaser.Math.Clamp(pointer.x, rifle.x, maxX);
+      }
+
+      // Mover el rifle a la posición del cursor en el eje X dentro de los límites definidos
+      rifle.x = cursorX;
+    });*/
     /////////////////
     // Añadir un evento de clic del ratón para cambiar a la escena de Gameover
     this.input.on('pointerdown', () => {
@@ -160,6 +232,9 @@ export class Game extends Scene {
     /*if (cursors.B.isDown) {
       //this.create2Bomb();
     }*/
+    if (this.scope.visible) {
+      this.scope.setPosition(this.input.mousePointer.x, this.input.mousePointer.y);
+    }
 
     this.tiempoReal(deltaTime);
   }
@@ -227,8 +302,26 @@ export class Game extends Scene {
   }
   */
 
-  ///////////// HIT BOMB ///////////
-
+  ///////////// BALAS VISIBLES ///////////
+  verBalas() {
+    if (cantidadBalas >= 3) {
+      bullet1.setAlpha(1);
+      bullet2.setAlpha(1);
+      bullet3.setAlpha(1);
+    } else if (cantidadBalas == 2) {
+      bullet1.setAlpha(0);
+      bullet2.setAlpha(1);
+      bullet3.setAlpha(1); // Ocultar la tercera bala
+    } else if (cantidadBalas == 1) {
+      bullet1.setAlpha(0);
+      bullet2.setAlpha(0); // Ocultar la segunda y tercera bala
+      bullet3.setAlpha(1);
+    } else if (cantidadBalas == 0) {
+      bullet1.setAlpha(0);
+      bullet2.setAlpha(0);
+      bullet3.setAlpha(0);
+    }
+  }
   ////////////// TIEMPO//////////
   tiempoReal(deltaTime) {
     tiempo += deltaTime / 1000;
@@ -242,7 +335,20 @@ export class Game extends Scene {
     return scoreTime.setText('Tiempo: ' + this.tiempoFormateado);
   }
 
-  /////////// SEGUNDA BOMBA ////////
+  /////////// crear ciervo ////////
+  crearCiervo(posX = this.scale.gameSize.width / 2, posY = this.scale.gameSize.height / 2, scale = 1) {
+    // Añadir la imagen del ciervo
+    const ciervo = this.add.image(posX, posY, 'deer').setInteractive({ pixelPerfect: true });
+
+    // Establecer la escala de la imagen del ciervo
+    ciervo.setScale(scale);
+
+    // Agregar evento de clic a la imagen del ciervo
+    ciervo.on('pointerdown', () => {
+      console.log('Se hizo clic en la imagen del ciervo');
+      emitter.explode(16);
+    });
+  }
 
   ////
 
