@@ -16,11 +16,13 @@ var tutorial = false;
 var bullet1;
 var bullet2;
 var bullet3;
-var scope;
+var apuntar = false;
 //
 var emitter;
 var buttonText3;
 var button3;
+//
+var ciervoExiste = false;
 
 export class Game extends Scene {
   constructor() {
@@ -46,6 +48,20 @@ export class Game extends Scene {
     */
     //
     //
+    // Crear el rectángulo para oscurecer la pantalla
+    //
+    //
+    //
+    //
+    //
+    ////
+    //
+    //
+
+    //////////////
+    //////////
+    //////
+
     //  A simple background for our game
     fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'backGround');
     fondo.setDisplaySize(this.scale.gameSize.width, this.scale.gameSize.height);
@@ -53,6 +69,18 @@ export class Game extends Scene {
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
+    //////////
+
+    // Detectar la tecla B presionada
+    const keyB = this.input.keyboard.addKey('B');
+    keyB.on('down', () => {
+      if (true) {
+        // Oscurecer la pantalla
+      } else {
+        // Eliminar el oscurecimiento
+      }
+    });
+    //////////////
 
     //////
     // Añadir el sprite del rifle encima de la barra marrón, en la esquina superior derecha
@@ -176,7 +204,11 @@ export class Game extends Scene {
       ///
     });
     //////////
-    this.crearCiervo(100, 400, 0.2);
+    if (!ciervoExiste) {
+      this.crearCiervo(100, 400, 0.2);
+      ciervoExiste = true;
+    }
+
     ///////
     //particulas
     emitter = this.add.particles(0, 0, 'atlas', {
@@ -381,26 +413,32 @@ export class Game extends Scene {
       // Agregar el parámetro pointer aquí
       console.log('Se hizo clic en la imagen del ciervo');
 
-      // Obtener la posición del ratón en el momento del clic
-      const mouseX = pointer.x;
-      const mouseY = pointer.y;
-
       // Activar la emisión de partículas en la posición del ratón si la sangre esta activada
+      if (!apuntar) {
+        // Generar un número entero aleatorio entre 1 y 3
+        const numeroAleatorio = Math.floor(Math.random() * 3) + 1;
 
-      if (visualizarSangre && cantidadBalas > 0) {
-        emitter.setPosition(mouseX, mouseY);
-        emitter.explode(16);
-      }
-      if (cantidadBalas > 0) {
-        ciervosMatar--;
-        // Actualizar el texto que muestra la cantidad de ciervos restantes
-        this.actualizarTextoCiervos();
-      }
+        // Establecer condiciones dependiendo del número aleatorio generado
+        if (numeroAleatorio === 1 && cantidadBalas > 0) {
+          console.log('has fallado prueba apuntando es más facil');
+        } else if (numeroAleatorio === 2 && cantidadBalas > 0) {
+          console.log('has fallado si no apuntas tienes posibilidades de fallar la bala');
+        } else if (numeroAleatorio === 3 && cantidadBalas > 0) {
+          console.log('vaya tiro!!! le has dado sin apuntar???');
+          this.eliminarCiervo(pointer);
 
-      // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
-      setTimeout(() => {
-        ciervo.destroy();
-      }, 1000); // 1000 milisegundos = 1 segundo
+          // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
+          setTimeout(() => {
+            ciervo.destroy();
+          }, 1000); // 1000 milisegundos = 1 segundo
+        }
+      } else {
+        this.eliminarCiervo(pointer);
+        // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
+        setTimeout(() => {
+          ciervo.destroy();
+        }, 1000); // 1000 milisegundos = 1 segundo
+      }
     });
   }
 
@@ -410,6 +448,23 @@ export class Game extends Scene {
     // Actualizar el texto que muestra la cantidad de ciervos restantes
     buttonText3.setText('Ciervos = ' + ciervosMatar);
     buttonText3.setOrigin(-3.15, -0.4);
+  }
+  /////////////////ELIMINAR CIERVO//////////
+  eliminarCiervo(pointer) {
+    // Obtener la posición del ratón en el momento del clic
+    const mouseX = pointer.x;
+    const mouseY = pointer.y;
+
+    if (visualizarSangre && cantidadBalas > 0) {
+      emitter.setPosition(mouseX, mouseY);
+      emitter.explode(16);
+    }
+    if (cantidadBalas > 0) {
+      ciervosMatar--;
+      // Actualizar el texto que muestra la cantidad de ciervos restantes
+      this.actualizarTextoCiervos();
+    }
+    ciervoExiste = false;
   }
 
   //////////////////// GAME OVER /////////////////
