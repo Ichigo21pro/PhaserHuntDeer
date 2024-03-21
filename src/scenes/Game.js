@@ -23,6 +23,8 @@ var buttonText3;
 var button3;
 //
 var ciervoExiste = false;
+var rifle;
+var brownBar;
 
 export class Game extends Scene {
   constructor() {
@@ -50,13 +52,6 @@ export class Game extends Scene {
     //
     // Crear el rectángulo para oscurecer la pantalla
     //
-    //
-    //
-    //
-    //
-    ////
-    //
-    //
 
     //////////////
     //////////
@@ -66,6 +61,7 @@ export class Game extends Scene {
     fondo = this.add.image(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, 'backGround');
     fondo.setDisplaySize(this.scale.gameSize.width, this.scale.gameSize.height);
 
+    //////
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
@@ -76,15 +72,20 @@ export class Game extends Scene {
     keyB.on('down', () => {
       apuntar = true;
       console.log('estas apuntando');
+      // Iniciar la animación para aumentar la escala al apuntar
+      this.scope.setScale(0.7);
     });
-    keyB.off('up', () => {
+    keyB.on('up', () => {
+      console.log('ya no apuntas');
       apuntar = false;
+      // Iniciar la animación para reducir la escala al dejar de apuntar
+      this.scope.setScale(0.3);
     });
     //////////////
 
     //////
     // Añadir el sprite del rifle encima de la barra marrón, en la esquina superior derecha
-    const rifle = this.add
+    rifle = this.add
       .sprite(this.scale.gameSize.width - 10, 10, 'rifle')
       .setOrigin(1, -0.96)
       .setScale(0.5);
@@ -106,7 +107,7 @@ export class Game extends Scene {
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
-    const brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 100, 0x8b4513);
+    brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 100, 0x8b4513);
     brownBar.setOrigin(0.5, 1); // Establecer el origen en la parte inferior
 
     // Añadir botón 1 a la barra marrón
@@ -431,7 +432,7 @@ export class Game extends Scene {
             ciervo.destroy();
           }, 1000); // 1000 milisegundos = 1 segundo
         }
-      } else {
+      } else if (cantidadBalas > 0) {
         this.eliminarCiervo(pointer);
         score += 20;
         scoreText.setText('Score: ' + score);
@@ -464,10 +465,10 @@ export class Game extends Scene {
       ciervosMatar--;
       // Actualizar el texto que muestra la cantidad de ciervos restantes
       this.actualizarTextoCiervos();
+      setTimeout(() => {
+        ciervoExiste = false;
+      }, 1500);
     }
-    setTimeout(() => {
-      ciervoExiste = false;
-    }, 1500);
   }
 
   //////////////////// GAME OVER /////////////////
@@ -480,13 +481,34 @@ export class Game extends Scene {
   ///////////// actualizar ciervos /////
   actualizarCiervos() {
     if (!ciervoExiste) {
-      this.crearCiervo(100, 400, 0.2);
-      ciervoExiste = true;
+      // Generar un número aleatorio entre 1 y 3
+      const numeroAleatorio = Math.floor(Math.random() * 3) + 1;
+      // Generar un número aleatorio entre 100 y 1000 para la posición en el eje x
+      const posicionX = Math.floor(Math.random() * 801) + 100;
+      switch (numeroAleatorio) {
+        case 1:
+          this.crearCiervo(posicionX, 350, 0.2);
+          ciervoExiste = true;
+          // Acciones para el caso 1
+          break;
+        case 2:
+          this.crearCiervo(posicionX, 400, 0.3);
+          ciervoExiste = true;
+          // Acciones para el caso 2
+          break;
+        case 3:
+          this.crearCiervo(posicionX, 500, 0.4);
+          ciervoExiste = true;
+          break;
+        default:
+          // Acciones para otros casos, si es necesario
+          break;
+      }
     }
     // Asegurar que el scope esté por encima del ciervo
     this.scope.setDepth(2);
-
     // Asegurar que las partículas estén por encima del ciervo pero por debajo del scope
     emitter.setDepth(1);
+    // Asegurar que el sprite del rifle esté por encima de los demás elementos
   }
 }
