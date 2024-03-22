@@ -342,7 +342,7 @@ blackOverlay.setOrigin(0);
     if (this.scope.visible) {
        // Verificar si se hizo clic en el juego
     if (this.input.activePointer.isDown) {
-      if (pointer.y < this.scale.gameSize.height - 150) {this.scope.setPosition(this.input.activePointer.x, this.input.activePointer.y);}
+      if (this.input.activePointer.y < this.scale.gameSize.height - 150) {this.scope.setPosition(this.input.activePointer.x, this.input.activePointer.y);}
       // Establecer la posición del scope en las coordenadas del clic
       
   } else {
@@ -594,17 +594,17 @@ blackOverlay.setOrigin(0);
       const posicionX = Math.floor(Math.random() * 801) + 100;
       switch (numeroAleatorio) {
         case 1:
-          this.crearCiervo(posicionX, 400, 0.2);
+          this.crearCiervo(posicionX, 300, 0.2);
           ciervoExiste = true;
           // Acciones para el caso 1
           break;
         case 2:
-          this.crearCiervo(posicionX, 450, 0.3);
+          this.crearCiervo(posicionX, 350, 0.3);
           ciervoExiste = true;
           // Acciones para el caso 2
           break;
         case 3:
-          this.crearCiervo(posicionX, 550, 0.4);
+          this.crearCiervo(posicionX, 450, 0.4);
           ciervoExiste = true;
           break;
         default:
