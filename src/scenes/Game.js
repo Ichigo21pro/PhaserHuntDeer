@@ -24,7 +24,7 @@ var button3;
 var ciervoExiste = false;
 var rifle;
 var brownBar;
-var ganar = null;
+var hayMensaje=false;
 //
 let tiempoInicio = 0; 
 
@@ -84,6 +84,7 @@ blackOverlay.setOrigin(0);
       //console.log('estas apuntando');
       // Iniciar la animación para aumentar la escala al apuntar
       this.scope.setScale(0.7);
+      apuntar = true;
       // Habilitar pixelPerfect en la imagen del "scope"
    
     });
@@ -718,11 +719,26 @@ blackOverlay.setOrigin(0);
   ////////////////////MOSTRAR TEXTO/////////////////
   // Función para mostrar mensajes en la pantalla durante cierto tiempo
 mostrarMensaje(mensaje, duracion) {
+  if(hayMensaje=false){
   const texto = this.add.text(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, mensaje, { fontFamily: 'Arial', fontSize: '24px', fill: '#ffffff' });
   texto.setOrigin(0.5);
-
   setTimeout(() => {
-      texto.destroy(); // Eliminar el texto después de la duración especificada
-  }, duracion);
+    texto.destroy(); // Eliminar el texto después de la duración especificada
+}, duracion);
+hayMensaje=true;
+}else {
+  setTimeout(() => {
+  const texto = this.add.text(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, mensaje, { fontFamily: 'Arial', fontSize: '24px', fill: '#ffffff' });
+  texto.setOrigin(0.5);
+  setTimeout(() => {
+    texto.destroy(); // Eliminar el texto después de la duración especificada
+}, duracion);
+hayMensaje=true;
+}, 4000);
+}
+setTimeout(() => {
+  hayMensaje =false;
+}, 4000);
+  
 }
 }
