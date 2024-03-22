@@ -101,7 +101,7 @@ blackOverlay.setOrigin(0);
     // Añadir el sprite del rifle encima de la barra marrón, en la esquina superior derecha
     rifle = this.add
       .sprite(this.scale.gameSize.width - 10, 10, 'rifle')
-      .setOrigin(1, -0.96)
+      .setOrigin(1, -0.8)
       .setScale(0.5);
     rifle.setInteractive(); // Hacer que el sprite del rifle sea interactivo
 
@@ -121,7 +121,7 @@ blackOverlay.setOrigin(0);
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
-    brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 100, 0x8b4513);
+    brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 150, 0x8b4513);
     brownBar.setOrigin(0.5, 1); // Establecer el origen en la parte inferior
 
     // Añadir botón 1 a la barra marrón
@@ -186,6 +186,31 @@ blackOverlay.setOrigin(0);
       // Añadir las imágenes de las balas al botón
       button4.bullets = [bullet1, bullet2, bullet3];
     });
+
+// boton 5 apuntar
+   var button5  = this.add
+      .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
+      .setOrigin(0.4, 1.3)
+      .setInteractive();
+    button5.on('pointerdown', () => {
+      // Agregar un rectángulo negro que cubra toda la pantalla
+blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
+blackOverlay.setOrigin(0);
+ 
+//this.scope.setMask(blackOverlay.createGeometryMask());
+      //console.log('estas apuntando');
+      // Iniciar la animación para aumentar la escala al apuntar
+      this.scope.setScale(0.7);
+      apuntar = true;
+      // Habilitar pixelPerfect en la imagen del "scope"
+    });
+    button5.on('pointerup', () => {
+    blackOverlay.destroy();
+    //console.log('ya no apuntas');
+    apuntar = false;
+    // Iniciar la animación para reducir la escala al dejar de apuntar
+    this.scope.setScale(0.3);});
+    var buttonText5 = this.add.text(button1.x, button1.y, 'APUNTAR', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-3, 1.8);
     ////////////////////
 
     // Añadir evento de clic del ratón para iniciar la animación del rifle
@@ -194,7 +219,7 @@ blackOverlay.setOrigin(0);
         this.mostrarMensaje("No te quedan balas",2000);
       } else {
         // Verificar si el clic está por encima de la barra marrón
-        if (pointer.y < this.scale.gameSize.height - 100) {
+        if (pointer.y < this.scale.gameSize.height - 150) {
           // Realizar el efecto de screen shake
           var shakeIntensity = 0.01; // Intensidad del shake
           var shakeDuration = 50; // Duración del shake en milisegundos
@@ -561,17 +586,17 @@ blackOverlay.setOrigin(0);
       const posicionX = Math.floor(Math.random() * 801) + 100;
       switch (numeroAleatorio) {
         case 1:
-          this.crearCiervo(posicionX, 350, 0.2);
+          this.crearCiervo(posicionX, 400, 0.2);
           ciervoExiste = true;
           // Acciones para el caso 1
           break;
         case 2:
-          this.crearCiervo(posicionX, 400, 0.3);
+          this.crearCiervo(posicionX, 450, 0.3);
           ciervoExiste = true;
           // Acciones para el caso 2
           break;
         case 3:
-          this.crearCiervo(posicionX, 500, 0.4);
+          this.crearCiervo(posicionX, 550, 0.4);
           ciervoExiste = true;
           break;
         default:
