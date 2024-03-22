@@ -8,6 +8,7 @@ export class GameOver extends Scene {
   create(data) {
     // Obtener la puntuación y el tiempo de los datos pasados desde la escena anterior
     const { score, tiempo } = data;
+    
     this.cameras.main.setBackgroundColor(0xff0000);
 
     this.add.image(512, 384, 'background').setAlpha(0.5);
