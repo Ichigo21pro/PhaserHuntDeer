@@ -24,6 +24,8 @@ var button3;
 var ciervoExiste = false;
 var rifle;
 var brownBar;
+//
+var mensajeActivo =false;
 
 //
 let tiempoInicio = 0; 
@@ -759,11 +761,24 @@ blackOverlay.setOrigin(0);
   ////////////////////MOSTRAR TEXTO/////////////////
   // Función para mostrar mensajes en la pantalla durante cierto tiempo
 mostrarMensaje(mensaje, duracion) {
+  // Verifica si ya hay un mensaje activo
+  if (mensajeActivo) {
+    // Si hay un mensaje activo, no hagas nada
+    return;
+  }
+
+  // Crea el texto del mensaje
   const texto = this.add.text(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, mensaje, { fontFamily: 'Arial', fontSize: '24px', fill: '#ffffff' });
   texto.setOrigin(0.5);
 
+  // Establece la variable de estado del mensaje como activa
+  mensajeActivo = true;
+
   setTimeout(() => {
-      texto.destroy(); // Eliminar el texto después de la duración especificada
+    // Elimina el texto después de la duración especificada
+    texto.destroy();
+    // Restablece la variable de estado del mensaje como inactiva
+    mensajeActivo = false;
   }, duracion);
 }
 }

@@ -42,6 +42,7 @@ export class Preloader extends Scene {
 
     this.load.image('deer', 'deer.png');
     this.load.image('bloodParticle', 'bloodP.png');
+    this.load.image('buttonAgain', 'buttonAgain.png');
   }
 
   create() {

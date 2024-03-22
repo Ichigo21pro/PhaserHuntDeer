@@ -65,39 +65,19 @@ this.tweens.add({
       } });
 
     // Crear un rectángulo como borde del botón
-    const buttonBorder = this.add.rectangle(400, 450, 200, 50, 0xFF5733).setStrokeStyle(3, 0x8B0000).setOrigin(0,-3.5);
+    const buttonBorder = this.add.image(505, 650,'buttonAgain');
+    buttonBorder.setScale(0.6);
 
-    // Crear el texto del botón "Play Again"
-    const playAgainText = this.add.text(400, 450, 'PLAY NOW', { fontSize: '32px', fontFamily: 'Madimi One', fill: '#000' }).setOrigin(-0.17, -4.8);
-    //animacion de boton y letras
-    //
-// Define la escala inicial y final para la animación de pulsación
-const initialScale = 1;
-const finalScale = 1.1;
+    // Animación de pulsación
+  this.tweens.add({
+  targets: buttonBorder,
+  scaleX: buttonBorder.scaleX * 0.9, // Escala en el eje X al 90% del tamaño original
+  scaleY: buttonBorder.scaleX * 0.9, // Escala en el eje Y al 90% del tamaño original
+  duration: 700, // Duración de la animación en milisegundos
+  yoyo: true, // Hacer que la animación se repita de vuelta al estado original
+  repeat: -1 // Repetir la animación indefinidamente
+  });
 
-// Define la duración de la animación y la cantidad de veces que se repetirá
-const duration = 500;
-const repeatCount = -1; // -1 para repetir infinitamente
-
-// Crea la animación de pulsación para el rectángulo del botón
-this.tweens.add({
-    targets: buttonBorder,
-    scaleX: [initialScale, finalScale],
-    scaleY: [initialScale, finalScale],
-    duration: duration,
-    yoyo: true,
-    repeat: repeatCount
-});
-
-// Crea la animación de pulsación para el texto del botón "Play Again"
-this.tweens.add({
-    targets: playAgainText,
-    scaleX: [initialScale, finalScale],
-    scaleY: [initialScale, finalScale],
-    duration: duration,
-    yoyo: true,
-    repeat: repeatCount
-});
     //
     // Hacer que el botón sea interactivo
     buttonBorder.setInteractive();  
