@@ -29,7 +29,7 @@ var mensajeActivo =false;
 
 //
 let tiempoInicio = 0; 
-
+var finalLevel= false;
 
 export class Game extends Scene {
   constructor() {
@@ -367,8 +367,16 @@ blackOverlay.setOrigin(0);
         this.gameOver();
       }, 1500);
     } else if (ciervosMatar <= 0) {
+      /*finalLevel = true;
+      if (finalLevel){
+        this.finalLevel();
+      }*/
+      
       this.mostrarMensaje("Felicidades has completado el desafio",2000);
       
+       //
+        
+    
       setTimeout(() => {
         this.gameOver();
       }, 1500);
@@ -795,4 +803,93 @@ mostrarMensaje(mensaje, duracion) {
     mensajeActivo = false;
   }, duracion);
 }
+
+////////////////FINAL LEVL////////////////
+/*finalLevel(){
+  this.mostrarMensaje("ultimo ciervo, ultima bala",2000);
+    // Agregar un rectángulo negro que cubra toda la pantalla
+    const blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
+    blackOverlay.setOrigin(0);  
+    // Agregar ciervo
+    const ciervo = this.add.image(500, 350, 'deer').setInteractive({ pixelPerfect: true });
+    ciervo.setScale(0.2);
+    
+    cargadorBalas = 0;
+      cantidadBalas =1;
+      this.verBalas();
+    //mecanica de matar ciervo
+    ciervo.on('pointerdown', (pointer) => {
+      // Agregar el parámetro pointer aquí
+      //console.log('Se hizo clic en la imagen del ciervo');
+
+      // Activar la emisión de partículas en la posición del ratón si la sangre esta activada
+      if (!apuntar) {
+        // Generar un número entero aleatorio entre 1 y 3
+        const numeroAleatorio = Math.floor(Math.random() * 3) + 1;
+
+        // Establecer condiciones dependiendo del número aleatorio generado
+        if (numeroAleatorio === 1 && cantidadBalas > 0) {
+          this.mostrarMensaje("has fallado prueba apuntando es más facil",2000);
+        } else if (numeroAleatorio === 2 && cantidadBalas > 0) {
+          this.mostrarMensaje("has fallado si no apuntas tienes posibilidades de fallar la bala",2000);
+        } else if (numeroAleatorio === 3 && cantidadBalas > 0) {
+          this.mostrarMensaje("vaya tiro!!! le has dado sin apuntar???",2000);
+          this.eliminarCiervo(pointer);
+
+          // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
+         // Realizar el efecto de screen shake
+         var shakeIntensity = 0.01; // Intensidad del shake
+         var shakeDuration = 50; // Duración del shake en milisegundos
+         this.cameras.main.shake(shakeDuration, shakeIntensity);
+         // Si el clic está por encima de la barra marrón, iniciar la animación del rifle
+         rifle.anims.play('fire'); // Iniciar la animación del rifle
+         cantidadBalas--;
+         /////
+         // Verificar la cantidad de balas y ocultar las imágenes correspondientes
+         this.verBalas();
+         /////
+         //console.log('se resto una bala');
+         // Agregar un retraso antes de iniciar la animación de recolocación
+         setTimeout(() => {
+           rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
+         }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
+         
+          ciervo.destroy();
+          
+          blackOverlay.destroy();
+        }
+      } else if (cantidadBalas > 0) {
+        this.eliminarCiervo(pointer);
+
+        // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
+         // Realizar el efecto de screen shake
+         var shakeIntensity = 0.01; // Intensidad del shake
+         var shakeDuration = 50; // Duración del shake en milisegundos
+         this.cameras.main.shake(shakeDuration, shakeIntensity);
+         // Si el clic está por encima de la barra marrón, iniciar la animación del rifle
+         rifle.anims.play('fire'); // Iniciar la animación del rifle
+         cantidadBalas--;
+         /////
+         // Verificar la cantidad de balas y ocultar las imágenes correspondientes
+         this.verBalas();
+         /////
+         //console.log('se resto una bala');
+         // Agregar un retraso antes de iniciar la animación de recolocación
+         setTimeout(() => {
+           rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
+         }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
+        ciervo.destroy();
+        
+        blackOverlay.destroy();
+      }
+      finalLevel =false;
+      
+
+    });
+
+     setTimeout(() => {
+        this.gameOver();
+      }, 1500);
+  
+}*/
 }
