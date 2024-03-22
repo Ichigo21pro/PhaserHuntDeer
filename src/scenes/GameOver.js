@@ -84,7 +84,7 @@ this.tweens.add({
 
     // Agregar evento de clic al botón
     buttonBorder.on('pointerdown', () => {
-      this.scene.start('Game'); // Vuelve a iniciar el juego al hacer clic en "Play Again"
+      window.open('https://play.google.com/store/apps/details?id=com.fullfat.deerhunter&hl=es_MX', '_blank'); // Vuelve a iniciar el juego al hacer clic en "Play Again"
     });
   }
 }
