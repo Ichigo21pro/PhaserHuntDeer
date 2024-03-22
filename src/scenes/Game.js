@@ -73,13 +73,22 @@ export class Game extends Scene {
 
     // Detectar la tecla B presionada
     const keyB = this.input.keyboard.addKey('B');
+    var blackOverlay;
+    
     keyB.on('down', () => {
-      apuntar = true;
+      // Agregar un rectángulo negro que cubra toda la pantalla
+blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
+blackOverlay.setOrigin(0);
+ 
+//this.scope.setMask(blackOverlay.createGeometryMask());
       //console.log('estas apuntando');
       // Iniciar la animación para aumentar la escala al apuntar
       this.scope.setScale(0.7);
+      // Habilitar pixelPerfect en la imagen del "scope"
+   
     });
     keyB.on('up', () => {
+      blackOverlay.destroy();
       //console.log('ya no apuntas');
       apuntar = false;
       // Iniciar la animación para reducir la escala al dejar de apuntar
