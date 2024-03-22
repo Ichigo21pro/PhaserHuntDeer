@@ -192,24 +192,31 @@ blackOverlay.setOrigin(0);
       .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
       .setOrigin(0.4, 1.3)
       .setInteractive();
+
+      ///
+      ///
     button5.on('pointerdown', () => {
-      // Agregar un rectángulo negro que cubra toda la pantalla
-blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
-blackOverlay.setOrigin(0);
+      apuntar = !apuntar;
+
+      if (apuntar) {
+        // Agregar un rectángulo negro que cubra toda la pantalla
+  blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
+  blackOverlay.setOrigin(0);
  
-//this.scope.setMask(blackOverlay.createGeometryMask());
-      //console.log('estas apuntando');
       // Iniciar la animación para aumentar la escala al apuntar
       this.scope.setScale(0.7);
-      apuntar = true;
+      
       // Habilitar pixelPerfect en la imagen del "scope"
+    } else {
+      blackOverlay.destroy();
+      //console.log('ya no apuntas');
+      
+      // Iniciar la animación para reducir la escala al dejar de apuntar
+      this.scope.setScale(0.3);
+    }
+      
     });
-    button5.on('pointerup', () => {
-    blackOverlay.destroy();
-    //console.log('ya no apuntas');
-    apuntar = false;
-    // Iniciar la animación para reducir la escala al dejar de apuntar
-    this.scope.setScale(0.3);});
+    
     var buttonText5 = this.add.text(button1.x, button1.y, 'APUNTAR', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-3, 1.8);
     ////////////////////
 
