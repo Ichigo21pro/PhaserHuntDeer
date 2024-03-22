@@ -340,7 +340,15 @@ blackOverlay.setOrigin(0);
       //this.create2Bomb();
     }*/
     if (this.scope.visible) {
+       // Verificar si se hizo clic en el juego
+    if (this.input.activePointer.isDown) {
+      if (pointer.y < this.scale.gameSize.height - 150) {this.scope.setPosition(this.input.activePointer.x, this.input.activePointer.y);}
+      // Establecer la posición del scope en las coordenadas del clic
+      
+  } else {
+      // Si no se hizo clic, seguir la posición del ratón
       this.scope.setPosition(this.input.mousePointer.x, this.input.mousePointer.y);
+  }
     }
 
     if (cantidadBalas == 0 && cargadorBalas == 0 && ciervosMatar > 0) {
