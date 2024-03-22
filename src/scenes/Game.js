@@ -529,6 +529,7 @@ blackOverlay.setOrigin(0);
           setTimeout(() => {
             rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
           }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
+          
           ciervo.destroy();
         }
       } else if (cantidadBalas > 0) {
@@ -713,6 +714,7 @@ blackOverlay.setOrigin(0);
          setTimeout(() => {
            rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
          }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
+         
           ciervo.destroy();
           tapToShoot.destroy(); 
           blackOverlay.destroy();
@@ -761,8 +763,8 @@ blackOverlay.setOrigin(0);
   ////////////////////MOSTRAR TEXTO/////////////////
   // Función para mostrar mensajes en la pantalla durante cierto tiempo
 mostrarMensaje(mensaje, duracion) {
-  // Verifica si ya hay un mensaje activo
-  if (mensajeActivo) {
+   // Verifica si ya hay un mensaje activo
+   if (mensajeActivo) {
     // Si hay un mensaje activo, no hagas nada
     return;
   }
@@ -771,12 +773,24 @@ mostrarMensaje(mensaje, duracion) {
   const texto = this.add.text(this.scale.gameSize.width / 2, this.scale.gameSize.height / 2, mensaje, { fontFamily: 'Arial', fontSize: '24px', fill: '#ffffff' });
   texto.setOrigin(0.5);
 
+  // Calcula el ancho y la altura del rectángulo de fondo
+  const paddingX = 10;
+  const paddingY = 5;
+  const backgroundWidth = texto.width + paddingX * 2;
+  const backgroundHeight = texto.height + paddingY * 2;
+
+  // Crea el rectángulo de fondo
+  const background = this.add.graphics();
+  background.fillStyle(0xCFB53B, 0.2); // Color y opacidad del fondo
+  background.fillRect(texto.x - backgroundWidth / 2, texto.y - backgroundHeight / 2, backgroundWidth, backgroundHeight);
+
   // Establece la variable de estado del mensaje como activa
   mensajeActivo = true;
 
   setTimeout(() => {
-    // Elimina el texto después de la duración especificada
+    // Elimina el texto y el fondo después de la duración especificada
     texto.destroy();
+    background.destroy();
     // Restablece la variable de estado del mensaje como inactiva
     mensajeActivo = false;
   }, duracion);
