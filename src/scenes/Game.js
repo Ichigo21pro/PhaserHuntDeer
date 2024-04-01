@@ -71,7 +71,7 @@ export class Game extends Scene {
     //////
     //  The score
 
-    scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
+    //scoreTime = this.add.text(16, 50, 'Tiempo: 00:00:00', { fontSize: '32px', fill: '#000' });
     //////////
 
     // Detectar la tecla B presionada
@@ -407,7 +407,7 @@ export class Game extends Scene {
     // Aplica el movimiento al rifle
     rifle.y += movimientoRespiracion;
 
-    this.tiempoReal(deltaTime);
+    //this.tiempoReal(deltaTime);
   }
 
   ///////////// OTHER FUNCTION ///////////
@@ -466,7 +466,7 @@ export class Game extends Scene {
     }
   }
   ////////////// TIEMPO//////////
-  tiempoReal(deltaTime) {
+  /*tiempoReal(deltaTime) {
     tiempo += deltaTime / 1000;
 
     var horas = Math.floor(tiempo / 3600);
@@ -476,7 +476,7 @@ export class Game extends Scene {
     this.tiempoFormateado = (horas < 10 ? '0' : '') + horas + ':' + (minutos < 10 ? '0' : '') + minutos + ':' + Math.floor(segundos).toString().padStart(2, '0');
 
     return scoreTime.setText('Tiempo: ' + this.tiempoFormateado);
-  }
+  }*/
 
   /////////// crear ciervo ////////
   crearCiervo(posX = this.scale.gameSize.width / 2, posY = this.scale.gameSize.height / 2, scale = 1) {
@@ -612,8 +612,7 @@ export class Game extends Scene {
   //////////////////// GAME OVER /////////////////
   gameOver() {
     // Cambiar a la escena de Gameover y pasar la puntuación y el tiempo como datos
-    this.scene.start('GameOver', { tiempo: this.tiempoFormateado });
-    tiempo = 0;
+    this.scene.start('GameOver');
 
     cantidadBalas = 3;
     ciervosMatar = 3;

@@ -7,14 +7,14 @@ export class GameOver extends Scene {
 
   create(data) {
     // Obtener la puntuación y el tiempo de los datos pasados desde la escena anterior
-    const { score, tiempo } = data;
+    //const { score, tiempo } = data;
 
     this.cameras.main.setBackgroundColor(0xb3b3b3);
 
     this.add.image(512, 384, 'backGround').setAlpha(0.5);
 
     //añadir el tiempo de juego
-    this.add.text(400, 350, 'Tiempo: ' + tiempo, { fontSize: '20px', fontFamily: 'Madimi One', fill: '#fff' }).setOrigin(2.35, 13.2);
+    //this.add.text(400, 350, 'Tiempo: ' + tiempo, { fontSize: '20px', fontFamily: 'Madimi One', fill: '#fff' }).setOrigin(2.35, 13.2);
     //
     //
     var Recuadro = this.add.image(512, 384, 'backGround').setAlpha(1);
