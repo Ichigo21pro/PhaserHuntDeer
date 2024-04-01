@@ -112,6 +112,13 @@ export class Game extends Scene {
       frameRate: 10,
       repeat: 0, // La animación se reproduce una vez
     });
+    //añadimos el sprite del ciervo
+    this.anims.create({
+      key: 'deer_anim', // Nombre de la animación
+      frames: this.anims.generateFrameNumbers('ciervo', { start: 0, end: 9 }), // Rango de frames en el spritesheet
+      frameRate: 10, // Velocidad de la animación (cuántos frames por segundo)
+      repeat: 0, // Repetir la animación infinitamente
+    });
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
@@ -590,22 +597,30 @@ export class Game extends Scene {
   }
   ///////////////TUTORIAL/////////////
   tutorial() {
-    // black overlay
-    //black
     // Agregar un rectángulo negro que cubra toda la pantalla
     const blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
     blackOverlay.setOrigin(0);
-    ///
-    const ciervo = this.add.image(1000, 350, 'deer').setInteractive({ pixelPerfect: true });
-    // Añadir la imagen 'tap_to_shoot' desde el atlas
-    const tapToShoot = this.add.image(1000, 360, 'atlas', 'tap_to_shoot.png');
+
+    // Crear el sprite del ciervo
+    const ciervo = this.add.sprite(1000, 350, 'ciervo');
     ciervo.setScale(0.3);
+    ciervo.setInteractive(); // Habilitar interactividad para el sprite
+
+    // Crear la animación del ciervo
+    this.anims.create({
+      key: 'ciervo_anim', // Nombre de la animación
+      frames: this.anims.generateFrameNumbers('ciervo', { start: 0, end: 18 }), // Rango de frames en el spritesheet
+      frameRate: 10, // Velocidad de la animación (cuántos frames por segundo)
+      repeat: 0, // Repetir la animación indefinidamente
+    });
+
+    // Reproducir la animación del ciervo
+    ciervo.play('ciervo_anim');
+
+    // Agregar la imagen 'tap_to_shoot' desde el atlas
+    const tapToShoot = this.add.image(1000, 360, 'atlas', 'tap_to_shoot.png');
     tapToShoot.setScale(0.5); // Puedes ajustar el valor según tu preferencia
     tapToShoot.setDepth(1);
-
-    /////
-    //animaciones
-    ////
 
     // Animar la transición del ciervo y 'tap to shoot' desde la posición 1000 a la posición 850 y 900 respectivamente
     this.tweens.add({
@@ -625,13 +640,28 @@ export class Game extends Scene {
         });
       },
     });
-    ///// tap to shoot animatio
+
     // Animar la transición de 'tap to shoot' desde la posición 1000 a la posición 900
     this.tweens.add({
       targets: tapToShoot,
       x: 900, // Cambia la posición x según tu preferencia
       duration: 1000,
       ease: 'Linear',
+    });
+
+    // Detectar el clic en el ciervo
+    ciervo.on('pointerdown', () => {
+      // Realizar acciones cuando se hace clic en el ciervo
+    });
+
+    // Resaltar la imagen del ciervo cuando se crea
+    this.tweens.add({
+      targets: ciervo,
+      scaleX: 0.35, // Aumentar el tamaño en el eje x
+      scaleY: 0.35, // Aumentar el tamaño en el eje y
+      duration: 500, // Duración de la animación en milisegundos
+      yoyo: true, // Hacer que la animación se revierta automáticamente
+      repeat: -1, // Repetir la animación indefinidamente
     });
 
     ////
