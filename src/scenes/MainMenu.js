@@ -6,7 +6,7 @@ export class MainMenu extends Scene {
   }
 
   create() {
-    this.add.image(512, 384, 'background');
+    this.add.image(512, 384, 'backGround').setScale(1.2);
 
     this.add.image(512, 340, 'atlas', 'logo.png');
 
