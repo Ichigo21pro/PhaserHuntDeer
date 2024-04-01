@@ -338,9 +338,6 @@ export class Game extends Scene {
       }
     }
     ////////////
-    if (ciervosMatar <= 1) {
-      noGenerarCiervo = true;
-    }
 
     // console.log('Game - update - cantidadBalas:', cantidadBalas, ', cargadorBalas:', cargadorBalas, ', ciervosMatar:', ciervosMatar);
     if (!finalLevel) {
@@ -351,6 +348,7 @@ export class Game extends Scene {
           this.gameOver();
         }, 1500);
       } else if (ciervosMatar <= 0) {
+        noGenerarCiervo = true;
         finalLevel = true;
         if (!juegoCompletado) {
           setTimeout(() => {
@@ -559,7 +557,7 @@ export class Game extends Scene {
   }
   ///////////// actualizar ciervos /////
   actualizarCiervos() {
-    if (!ciervoExiste) {
+    if (!ciervoExiste && !noGenerarCiervo) {
       // Generar un número aleatorio entre 1 y 3
       const numeroAleatorio = Math.floor(Math.random() * 3) + 1;
       // Generar un número aleatorio entre 100 y 1000 para la posición en el eje x
@@ -771,7 +769,7 @@ export class Game extends Scene {
     // Condiciones
     ciervosMatar = 1;
     cantidadBalas = 1;
-
+    this.actualizarTextoCiervos();
     this.verBalas();
     noGenerarCiervo = true;
 
@@ -798,7 +796,7 @@ export class Game extends Scene {
           ciervoF.destroy();
           setTimeout(() => {
             this.gameOver();
-          }, 5000);
+          }, 2000);
 
           // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
           // Realizar el efecto de screen shake
@@ -822,12 +820,12 @@ export class Game extends Scene {
           blackOverlay.destroy();
           setTimeout(() => {
             this.gameOver();
-          }, 1000);
+          }, 2000);
           this.mostrarMensaje('buen tiro has demostrado ser todo un cazador', 2000);
 
           setTimeout(() => {
             this.gameOver();
-          }, 100000);
+          }, 2000);
         }
       } else if (cantidadBalas > 0) {
         this.eliminarCiervo(pointer);
@@ -854,7 +852,7 @@ export class Game extends Scene {
         blackOverlay.destroy();
         setTimeout(() => {
           this.gameOver();
-        }, 1000);
+        }, 2000);
       }
       finalLevel = false;
 
