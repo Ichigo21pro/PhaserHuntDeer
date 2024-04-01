@@ -36,6 +36,13 @@ var finalLevel = false;
 var noGenerarCiervo = false;
 var juegoCompletado = false;
 var gameOverExecuted = false;
+//
+var markA1;
+var markA2;
+var markA3;
+var markI1;
+var markI2;
+var markI3;
 
 export class Game extends Scene {
   constructor() {
@@ -255,6 +262,26 @@ export class Game extends Scene {
       ///
     });
     //////////
+    var button6 = this.add.image(750, 10, 'deerTableScore').setOrigin(0, 0).setScale(0.5);
+    markI1 = this.add
+      .sprite(button6.x - 90, button3.y, 'deerScoreInactive')
+      .setOrigin(-1.4, 8.45)
+      .setScale(0.7);
+    markI2 = this.add.sprite(button6.x, button3.y, 'deerScoreInactive').setOrigin(-1.4, 8.45).setScale(0.7);
+    markI3 = this.add
+      .sprite(button6.x + 90, button3.y, 'deerScoreInactive')
+      .setOrigin(-1.4, 8.45)
+      .setScale(0.7);
+    markA1 = this.add
+      .sprite(button6.x - 90, button3.y, 'deerScoreActive')
+      .setOrigin(-1.4, 8.45)
+      .setScale(0.7);
+    markA2 = this.add.sprite(button6.x, button3.y, 'deerScoreActive').setOrigin(-1.4, 8.45).setScale(0.7);
+    markA3 = this.add
+      .sprite(button6.x + 90, button3.y, 'deerScoreActive')
+      .setOrigin(-1.4, 8.45)
+      .setScale(0.7);
+    ////////
 
     ///////
     //particulas
@@ -526,6 +553,35 @@ export class Game extends Scene {
   ///////////////////ACTUALIZAR TEXTO/////////////
   // Función para actualizar el texto que muestra la cantidad de ciervos restantes
   actualizarTextoCiervos() {
+    if (ciervosMatar >= 3) {
+      markA1.setAlpha(1);
+      markA2.setAlpha(1);
+      markA3.setAlpha(1);
+      markI1.setAlpha(0);
+      markI2.setAlpha(0);
+      markI3.setAlpha(0);
+    } else if (ciervosMatar == 2) {
+      markA1.setAlpha(1);
+      markA2.setAlpha(1);
+      markA3.setAlpha(0);
+      markI1.setAlpha(0);
+      markI2.setAlpha(0);
+      markI3.setAlpha(1);
+    } else if (ciervosMatar == 1) {
+      markA1.setAlpha(1);
+      markA2.setAlpha(0);
+      markA3.setAlpha(0);
+      markI1.setAlpha(0);
+      markI2.setAlpha(1);
+      markI3.setAlpha(1);
+    } else if (ciervosMatar == 0) {
+      markA1.setAlpha(0);
+      markA2.setAlpha(0);
+      markA3.setAlpha(0);
+      markI1.setAlpha(1);
+      markI2.setAlpha(1);
+      markI3.setAlpha(1);
+    }
     // Actualizar el texto que muestra la cantidad de ciervos restantes
     buttonText3.setText('Ciervos = ' + ciervosMatar);
   }
