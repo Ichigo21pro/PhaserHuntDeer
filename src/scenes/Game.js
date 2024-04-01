@@ -43,6 +43,8 @@ var markA3;
 var markI1;
 var markI2;
 var markI3;
+//
+var AnimacionSangre;
 
 export class Game extends Scene {
   constructor() {
@@ -125,8 +127,16 @@ export class Game extends Scene {
       key: 'deer_anim', // Nombre de la animación
       frames: this.anims.generateFrameNumbers('ciervo', { start: 0, end: 9 }), // Rango de frames en el spritesheet
       frameRate: 10, // Velocidad de la animación (cuántos frames por segundo)
-      repeat: 0, // Repetir la animación infinitamente
+      repeat: 0, // Repetir la animación 1 vez
     });
+    //añadimos el sprite de la sangre
+    this.anims.create({
+      key: 'bloodAnimation', // Nombre de la animación
+      frames: this.anims.generateFrameNumbers('animacionSangreCiervo', { start: 0, end: 8 }), // Rango de frames en el spritesheet
+      frameRate: 20, // Velocidad de la animación (cuántos frames por segundo)
+      repeat: 0, // Repetir la animación 1 vez
+    });
+    //AnimacionSangre.anims.play('bloodAnimation');
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
@@ -594,6 +604,20 @@ export class Game extends Scene {
     if (visualizarSangre && cantidadBalas > 0) {
       emitter.setPosition(mouseX, mouseY);
       emitter.explode(16);
+      // Crear la animación de sangre en la posición del cursor
+      var anim = this.add.sprite(mouseX, mouseY, 'animacionSangre');
+      anim.setScale(0.1); // Ajusta la escala según sea necesario
+      anim.anims.play('bloodAnimation');
+
+      // Escucha el evento animationcomplete
+      anim.on(
+        'animationcomplete',
+        function () {
+          // Destruye el sprite una vez que la animación ha terminado
+          anim.destroy();
+        },
+        this
+      );
     }
     if (noGenerarCiervo) {
       // Actualizar el texto que muestra la cantidad de ciervos restantes
