@@ -599,9 +599,22 @@ export class Game extends Scene {
   ///////////////TUTORIAL/////////////
   tutorial() {
     // Agregar un rectángulo negro que cubra toda la pantalla
-    const blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.5);
-    blackOverlay.setOrigin(0);
+    //const blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.7);
+    //blackOverlay.setOrigin(0);
+    const overlay = this.add.graphics();
 
+    overlay.fillStyle(0x000000, 0.8).fillRect(0, 0, 1024, 683);
+
+    const maskGraphics = this.make.graphics();
+
+    maskGraphics.fillStyle(0xffffff);
+    maskGraphics.fillCircle(850, 370, 90);
+
+    const mask = new Phaser.Display.Masks.BitmapMask(this, maskGraphics);
+
+    mask.invertAlpha = true;
+
+    overlay.setMask(mask);
     // Crear el sprite del ciervo
     const ciervo = this.add.sprite(1000, 350, 'ciervo');
     ciervo.setScale(0.3);
@@ -704,7 +717,10 @@ export class Game extends Scene {
 
           ciervo.destroy();
           tapToShoot.destroy();
-          blackOverlay.destroy();
+          // blackOverlay.destroy();
+          overlay.destroy();
+          maskGraphics.destroy();
+          mask.destroy();
         }
       } else if (cantidadBalas > 0) {
         this.eliminarCiervo(pointer);
@@ -728,7 +744,10 @@ export class Game extends Scene {
         }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
         ciervo.destroy();
         tapToShoot.destroy();
-        blackOverlay.destroy();
+        // blackOverlay.destroy();
+        overlay.destroy();
+        maskGraphics.destroy();
+        mask.destroy();
       }
     });
     // Resaltar la imagen del ciervo cuando se crea
