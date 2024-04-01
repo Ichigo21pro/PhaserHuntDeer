@@ -8,13 +8,16 @@ var tiempo = 0;
 ///
 var visualizarSangre = true;
 var ciervosMatar = 3;
-var cantidadBalas = 3;
-var cargadorBalas = 1;
+var cantidadBalas = 6;
+//var cargadorBalas = 1;
 var tutorial = true;
 //
 var bullet1;
 var bullet2;
 var bullet3;
+var bullet4;
+var bullet5;
+var bullet6;
 var apuntar = false;
 //
 var emitter;
@@ -92,7 +95,7 @@ export class Game extends Scene {
     // Añadir el sprite del rifle encima de la barra marrón, en la esquina superior derecha
     rifle = this.add
       .sprite(this.scale.gameSize.width - 10, 10, 'rifle')
-      .setOrigin(1, -0.8)
+      .setOrigin(1, -1)
       .setScale(0.5);
     rifle.setInteractive(); // Hacer que el sprite del rifle sea interactivo
 
@@ -112,11 +115,11 @@ export class Game extends Scene {
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
-    brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 150, 0x8b4513);
+    brownBar = this.add.rectangle(this.scale.gameSize.width / 2, this.scale.gameSize.height, this.scale.gameSize.width, 85, 0x8b4513);
     brownBar.setOrigin(0.5, 1); // Establecer el origen en la parte inferior
 
     // Añadir botón 1 a la barra marrón
-    const button1 = this.add
+    /*const button1 = this.add
       .image(100, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Reload.png')
       .setOrigin(0.5, 0.2)
       .setInteractive();
@@ -133,11 +136,11 @@ export class Game extends Scene {
       }
     });
     const buttonText1 = this.add.text(button1.x, button1.y, 'Recargar', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(0, -0.2);
-
+    */
     // Añadir botón 2 a la barra marrón
     const button2 = this.add
       .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
-      .setOrigin(0.9, -0.1)
+      .setOrigin(3, 0)
       .setInteractive();
     button2.on('pointerdown', () => {
       // Cambiar el estado de visualizarSangre
@@ -150,38 +153,41 @@ export class Game extends Scene {
         this.mostrarMensaje('Ya no veras las animaciones de sangre', 2000);
       }
     });
-    const buttonText2 = this.add.text(button1.x, button1.y, 'VIEWBLOOD', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-1.7, -0.4);
+    const buttonText2 = this.add.text(button2.x, button2.y, 'VIEWBLOOD', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(3.07, -0.25);
 
     // Añadir botón 3 a la barra marrón
     button3 = this.add
       .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
-      .setOrigin(-0.2, -0.1)
+      .setOrigin(0.2, 0)
       .setInteractive();
     button3.on('pointerdown', () => {
       //console.log('Botón Para ver ciervos a los que matar');
     });
-    buttonText3 = this.add.text(button1.x, button1.y, 'Ciervos = ' + ciervosMatar, { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-3.15, -0.4);
+    buttonText3 = this.add.text(button3.x, button3.y, 'Ciervos = ' + ciervosMatar, { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(0.15, -0.2);
 
     // Añadir botón 4 a la barra marrón
     const button4 = this.add
       .image(this.scale.gameSize.width - 100, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Continue.png')
-      .setOrigin(0.5, 0.1)
+      .setOrigin(0.8, 0.1)
       .setInteractive();
     // Crear las imágenes de las balas
-    bullet1 = this.add.sprite(button4.x - 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(0.5, 0.2);
-    bullet2 = this.add.sprite(button4.x, button3.y, 'atlas', 'bullet_small.png').setOrigin(0.5, 0.2);
-    bullet3 = this.add.sprite(button4.x + 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(0.5, 0.2);
+    bullet1 = this.add.sprite(button4.x - 60, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
+    bullet2 = this.add.sprite(button4.x - 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
+    bullet3 = this.add.sprite(button4.x, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
+    bullet4 = this.add.sprite(button4.x + 30, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
+    bullet5 = this.add.sprite(button4.x + 60, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
+    bullet6 = this.add.sprite(button4.x + 90, button3.y, 'atlas', 'bullet_small.png').setOrigin(3, 0.2);
     button4.on('pointerdown', () => {
       //console.log('Balas');
 
       // Añadir las imágenes de las balas al botón
-      button4.bullets = [bullet1, bullet2, bullet3];
+      button4.bullets = [bullet1, bullet2, bullet3, bullet4, bullet5, bullet6];
     });
 
     // boton 5 apuntar
     var button5 = this.add
       .image(this.scale.gameSize.width / 2, this.scale.gameSize.height - 60, 'atlas', 'ui_button_Replay.png')
-      .setOrigin(0.4, 1.3)
+      .setOrigin(1.8, 0)
       .setInteractive();
 
     ///
@@ -207,7 +213,7 @@ export class Game extends Scene {
       }
     });
 
-    var buttonText5 = this.add.text(button1.x, button1.y, 'APUNTAR', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(-3, 1.8);
+    var buttonText5 = this.add.text(button5.x, button5.y, 'APUNTAR', { fontFamily: 'Madimi One', fontSize: '30px', fill: '#000000' }).setOrigin(2.2, -0.25);
     ////////////////////
 
     // Añadir evento de clic del ratón para iniciar la animación del rifle
@@ -216,7 +222,7 @@ export class Game extends Scene {
         this.mostrarMensaje('No te quedan balas', 2000);
       } else {
         // Verificar si el clic está por encima de la barra marrón
-        if (pointer.y < this.scale.gameSize.height - 150) {
+        if (pointer.y < this.scale.gameSize.height - 85) {
           // Realizar el efecto de screen shake
           var shakeIntensity = 0.01; // Intensidad del shake
           var shakeDuration = 50; // Duración del shake en milisegundos
@@ -338,15 +344,13 @@ export class Game extends Scene {
 
     // console.log('Game - update - cantidadBalas:', cantidadBalas, ', cargadorBalas:', cargadorBalas, ', ciervosMatar:', ciervosMatar);
     if (!finalLevel) {
-      if (cantidadBalas == 0 && cargadorBalas == 0 && ciervosMatar > 0) {
-        console.log('Game - update - lose');
+      if (cantidadBalas == 0 && ciervosMatar > 0) {
         this.mostrarMensaje('Has perdido no tienes ni balas ni cargadores', 2000);
         gameOver = true;
         setTimeout(() => {
           this.gameOver();
         }, 1500);
       } else if (ciervosMatar <= 0) {
-        console.log('Game - update - go to finalLevel');
         finalLevel = true;
         if (!juegoCompletado) {
           setTimeout(() => {
@@ -377,22 +381,55 @@ export class Game extends Scene {
 
   ///////////// BALAS VISIBLES ///////////
   verBalas() {
-    if (cantidadBalas >= 3) {
+    if (cantidadBalas >= 6) {
       bullet1.setAlpha(1);
       bullet2.setAlpha(1);
       bullet3.setAlpha(1);
-    } else if (cantidadBalas == 2) {
-      bullet1.setAlpha(0);
+      bullet4.setAlpha(1);
+      bullet5.setAlpha(1);
+      bullet6.setAlpha(1);
+    } else if (cantidadBalas == 5) {
+      bullet1.setAlpha(1);
       bullet2.setAlpha(1);
-      bullet3.setAlpha(1); // Ocultar la tercera bala
-    } else if (cantidadBalas == 1) {
-      bullet1.setAlpha(0);
-      bullet2.setAlpha(0); // Ocultar la segunda y tercera bala
       bullet3.setAlpha(1);
+      bullet4.setAlpha(1);
+      bullet5.setAlpha(1);
+      bullet6.setAlpha(0);
+    } else if (cantidadBalas == 4) {
+      bullet1.setAlpha(1);
+      bullet2.setAlpha(1);
+      bullet3.setAlpha(1);
+      bullet4.setAlpha(1);
+      bullet5.setAlpha(0);
+      bullet6.setAlpha(0);
+    } else if (cantidadBalas == 3) {
+      bullet1.setAlpha(1);
+      bullet2.setAlpha(1);
+      bullet3.setAlpha(1);
+      bullet4.setAlpha(0);
+      bullet5.setAlpha(0);
+      bullet6.setAlpha(0);
+    } else if (cantidadBalas == 2) {
+      bullet1.setAlpha(1);
+      bullet2.setAlpha(1);
+      bullet3.setAlpha(0);
+      bullet4.setAlpha(0);
+      bullet5.setAlpha(0);
+      bullet6.setAlpha(0);
+    } else if (cantidadBalas == 1) {
+      bullet1.setAlpha(1);
+      bullet2.setAlpha(0);
+      bullet3.setAlpha(0);
+      bullet4.setAlpha(0);
+      bullet5.setAlpha(0);
+      bullet6.setAlpha(0);
     } else if (cantidadBalas == 0) {
       bullet1.setAlpha(0);
       bullet2.setAlpha(0);
       bullet3.setAlpha(0);
+      bullet4.setAlpha(0);
+      bullet5.setAlpha(0);
+      bullet6.setAlpha(0);
     }
   }
   ////////////// TIEMPO//////////
@@ -516,7 +553,6 @@ export class Game extends Scene {
     this.scene.start('GameOver', { tiempo: this.tiempoFormateado });
     tiempo = 0;
 
-    cargadorBalas = 1;
     cantidadBalas = 3;
     ciervosMatar = 3;
     tutorial = true;
@@ -735,7 +771,7 @@ export class Game extends Scene {
     // Condiciones
     ciervosMatar = 1;
     cantidadBalas = 1;
-    cargadorBalas = 0;
+
     this.verBalas();
     noGenerarCiervo = true;
 
@@ -814,7 +850,7 @@ export class Game extends Scene {
           rifle.anims.play('recolocateRifle'); // Volver a colocar el rifle
         }, 300); // Tiempo en milisegundos (300 milisegundos = 0.3 segundos)
         ciervoF.destroy();
-
+        this.mostrarMensaje('buen tiro has demostrado ser todo un cazador', 2000);
         blackOverlay.destroy();
         setTimeout(() => {
           this.gameOver();
@@ -823,14 +859,11 @@ export class Game extends Scene {
       finalLevel = false;
 
       if (cantidadBalas == 0) {
-        this.mostrarMensaje('has fallado la bala... buen intento', 2000);
+        //this.mostrarMensaje('has fallado la bala... buen intento', 2000);
         setTimeout(() => {
           this.gameOver();
         }, 5000);
       }
     });
-
-    // tiempo max de espera si no termina el juego
-    console.log('Game - final - cantidadBalas:', cantidadBalas);
   }
 }
