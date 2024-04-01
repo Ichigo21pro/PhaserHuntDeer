@@ -796,6 +796,7 @@ export class Game extends Scene {
           ciervoF.destroy();
           setTimeout(() => {
             this.gameOver();
+            gameOver = true;
           }, 2000);
 
           // Establecer un temporizador para destruir el ciervo después de un cierto tiempo (por ejemplo, 1 segundo)
@@ -820,11 +821,13 @@ export class Game extends Scene {
           blackOverlay.destroy();
           setTimeout(() => {
             this.gameOver();
+            gameOver = true;
           }, 2000);
           this.mostrarMensaje('buen tiro has demostrado ser todo un cazador', 2000);
 
           setTimeout(() => {
             this.gameOver();
+            gameOver = true;
           }, 2000);
         }
       } else if (cantidadBalas > 0) {
@@ -852,16 +855,17 @@ export class Game extends Scene {
         blackOverlay.destroy();
         setTimeout(() => {
           this.gameOver();
+          gameOver = true;
         }, 2000);
-      }
-      finalLevel = false;
-
-      if (cantidadBalas == 0) {
+      } else if (cantidadBalas == 0) {
         //this.mostrarMensaje('has fallado la bala... buen intento', 2000);
         setTimeout(() => {
           this.gameOver();
+          gameOver = true;
+          console.log('me ejecuto');
         }, 5000);
       }
+      finalLevel = false;
     });
   }
 }
