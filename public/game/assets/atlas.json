@@ -4,8 +4,8 @@
 			"image": "atlas",
 			"format": "RGBA8888",
 			"size": {
-				"w": 1238,
-				"h": 2047
+				"w": 2047,
+				"h": 1238
 			},
 			"scale": 1,
 			"frames": [
@@ -136,29 +136,29 @@
 					}
 				},
 				{
-					"filename": "bullet_large.png",
-					"rotated": true,
+					"filename": "bloodP.png",
+					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 46,
-						"h": 116
+						"w": 21,
+						"h": 29
 					},
 					"spriteSourceSize": {
-						"x": 2,
+						"x": 1,
 						"y": 1,
-						"w": 43,
-						"h": 115
+						"w": 19,
+						"h": 27
 					},
 					"frame": {
 						"x": 838,
 						"y": 407,
-						"w": 43,
-						"h": 115
+						"w": 19,
+						"h": 27
 					}
 				},
 				{
 					"filename": "tap_to_shoot.png",
-					"rotated": true,
+					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
 						"w": 370,
@@ -171,15 +171,15 @@
 						"h": 161
 					},
 					"frame": {
-						"x": 0,
-						"y": 1238,
+						"x": 1238,
+						"y": 0,
 						"w": 350,
 						"h": 161
 					}
 				},
 				{
 					"filename": "dog.png",
-					"rotated": true,
+					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
 						"w": 295,
@@ -192,15 +192,15 @@
 						"h": 290
 					},
 					"frame": {
-						"x": 0,
-						"y": 1588,
+						"x": 1588,
+						"y": 0,
 						"w": 295,
 						"h": 290
 					}
 				},
 				{
 					"filename": "ui_button_Replay.png",
-					"rotated": true,
+					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
 						"w": 164,
@@ -213,15 +213,15 @@
 						"h": 54
 					},
 					"frame": {
-						"x": 0,
-						"y": 1883,
+						"x": 1883,
+						"y": 0,
 						"w": 164,
 						"h": 54
 					}
 				},
 				{
 					"filename": "ui_button_Continue.png",
-					"rotated": true,
+					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
 						"w": 148,
@@ -234,10 +234,31 @@
 						"h": 53
 					},
 					"frame": {
-						"x": 54,
-						"y": 1883,
+						"x": 1883,
+						"y": 54,
 						"w": 148,
 						"h": 53
+					}
+				},
+				{
+					"filename": "bullet_large.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 46,
+						"h": 116
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 43,
+						"h": 115
+					},
+					"frame": {
+						"x": 1883,
+						"y": 107,
+						"w": 43,
+						"h": 115
 					}
 				},
 				{
@@ -255,8 +276,8 @@
 						"h": 58
 					},
 					"frame": {
-						"x": 107,
-						"y": 1883,
+						"x": 1926,
+						"y": 107,
 						"w": 22,
 						"h": 58
 					}
