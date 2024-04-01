@@ -35,6 +35,7 @@ let tiempoInicio = 0;
 var finalLevel = false;
 var noGenerarCiervo = false;
 var juegoCompletado = false;
+var gameOverExecuted = false;
 
 export class Game extends Scene {
   constructor() {
@@ -887,15 +888,28 @@ export class Game extends Scene {
           this.gameOver();
           gameOver = true;
         }, 2000);
-      } else if (cantidadBalas == 0) {
+      }
+      /*if (cantidadBalas <= 0) {
         //this.mostrarMensaje('has fallado la bala... buen intento', 2000);
         setTimeout(() => {
           this.gameOver();
           gameOver = true;
           console.log('me ejecuto');
-        }, 5000);
-      }
+        }, 2000);
+      }*/
+
       finalLevel = false;
+    });
+    this.input.on('pointerdown', (pointer) => {
+      // Verificar si el objetivo del evento no es la imagen del ciervo
+      if (!gameOverExecuted) {
+        this.mostrarMensaje('vaya has fallado el tiro...', 2000);
+        setTimeout(() => {
+          this.gameOver();
+          gameOver = true;
+          gameOverExecuted = true; // Marcar que el game over se ha ejecutado
+        }, 2000);
+      }
     });
   }
 }
