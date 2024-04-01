@@ -9,31 +9,25 @@ export class GameOver extends Scene {
     // Obtener la puntuación y el tiempo de los datos pasados desde la escena anterior
     //const { score, tiempo } = data;
 
-    this.cameras.main.setBackgroundColor(0xb3b3b3);
-
-    this.add.image(512, 384, 'backGround').setAlpha(0.5);
-
     //añadir el tiempo de juego
     //this.add.text(400, 350, 'Tiempo: ' + tiempo, { fontSize: '20px', fontFamily: 'Madimi One', fill: '#fff' }).setOrigin(2.35, 13.2);
     //
     //
     var Recuadro = this.add.image(512, 384, 'backGround').setAlpha(1);
     Recuadro.setOrigin(0.5, 0.5);
-    Recuadro.setScale(500 / Recuadro.width, 700 / Recuadro.height);
+    Recuadro.setScale(1.2);
 
     //
 
-    //letras gameOver
-    const logo = this.add.image(512, -100, 'atlas', 'logo.png');
     //imagen del ciervo y perro
-    const deer = this.add.image(1300, 400, 'atlas', 'deer.png');
-    deer.setScale(0.7); // Escalar la imagen si es necesario
+    const deer = this.add.image(1300, 350, 'atlas', 'deer.png');
+    deer.setScale(1.3); // Escalar la imagen si es necesario
     const perro = this.add.image(-150, 450, 'atlas', 'dog.png');
-    perro.setScale(0.7);
+    perro.setScale(1.3);
     // Crear una animación para mover el ciervo hacia la posición x = 600
     this.tweens.add({
       targets: deer,
-      x: 626,
+      x: 778,
       duration: 1000, // Duración de la animación en milisegundos
       ease: 'Linear', // Tipo de interpolación (lineal en este caso)
       onComplete: () => {
@@ -42,10 +36,12 @@ export class GameOver extends Scene {
         // Aquí puedes agregar más acciones después de que la animación se complete
       },
     });
+    //letras gameOver
+    const logo = this.add.image(512, -100, 'atlas', 'logo.png');
     //animacion del perro
     this.tweens.add({
       targets: perro,
-      x: 364,
+      x: 190,
       duration: 1000, // Duración de la animación en milisegundos
       ease: 'Linear', // Tipo de interpolación (lineal en este caso)
       onComplete: () => {
@@ -57,7 +53,7 @@ export class GameOver extends Scene {
     //animacion logo
     this.tweens.add({
       targets: logo,
-      y: 150,
+      y: 200,
       duration: 1000, // Duración de la animación en milisegundos
       ease: 'Linear', // Tipo de interpolación (lineal en este caso)
       onComplete: () => {
@@ -69,7 +65,7 @@ export class GameOver extends Scene {
 
     // Crear un rectángulo como borde del botón
     const buttonBorder = this.add.image(505, 650, 'buttonAgain');
-    buttonBorder.setScale(0.6);
+    buttonBorder.setScale(1);
 
     // Animación de pulsación
     this.tweens.add({
