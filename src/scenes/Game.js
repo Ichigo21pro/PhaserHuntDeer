@@ -21,7 +21,7 @@ var bullet6;
 var apuntar = false;
 //
 var emitter;
-var buttonText3;
+//var buttonText3;
 var button3;
 //
 var ciervoExiste = false;
@@ -225,7 +225,7 @@ export class Game extends Scene {
       .setOrigin(3.07, -0.25);
 
     // Añadir botón 3 a la barra marrón
-    button3 = this.add
+    /*button3 = this.add
       .image(
         this.scale.gameSize.width / 2,
         this.scale.gameSize.height - 60,
@@ -243,7 +243,7 @@ export class Game extends Scene {
         fontSize: "30px",
         fill: "#000000",
       })
-      .setOrigin(0.15, -0.2);
+      .setOrigin(0.15, -0.2);*/
 
     // Añadir botón 4 a la barra marrón
     const button4 = this.add
@@ -257,22 +257,22 @@ export class Game extends Scene {
       .setInteractive();
     // Crear las imágenes de las balas
     bullet1 = this.add
-      .sprite(button4.x - 60, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x - 60, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     bullet2 = this.add
-      .sprite(button4.x - 30, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x - 30, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     bullet3 = this.add
-      .sprite(button4.x, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     bullet4 = this.add
-      .sprite(button4.x + 30, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x + 30, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     bullet5 = this.add
-      .sprite(button4.x + 60, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x + 60, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     bullet6 = this.add
-      .sprite(button4.x + 90, button3.y, "atlas", "bullet_small.png")
+      .sprite(button4.x + 90, button4.y, "atlas", "bullet_small.png")
       .setOrigin(3, 0.2);
     button4.on("pointerdown", () => {
       //console.log('Balas');
@@ -367,27 +367,27 @@ export class Game extends Scene {
       .setOrigin(0, 0)
       .setScale(0.5);
     markI1 = this.add
-      .sprite(button6.x - 90, button3.y, "deerScoreInactive")
+      .sprite(button6.x - 90, button6.y, "deerScoreInactive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     markI2 = this.add
-      .sprite(button6.x, button3.y, "deerScoreInactive")
+      .sprite(button6.x, button6.y, "deerScoreInactive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     markI3 = this.add
-      .sprite(button6.x + 90, button3.y, "deerScoreInactive")
+      .sprite(button6.x + 90, button6.y, "deerScoreInactive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     markA1 = this.add
-      .sprite(button6.x - 90, button3.y, "deerScoreActive")
+      .sprite(button6.x - 90, button6.y, "deerScoreActive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     markA2 = this.add
-      .sprite(button6.x, button3.y, "deerScoreActive")
+      .sprite(button6.x, button6.y, "deerScoreActive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     markA3 = this.add
-      .sprite(button6.x + 90, button3.y, "deerScoreActive")
+      .sprite(button6.x + 90, button6.y, "deerScoreActive")
       .setOrigin(-1.4, 8.45)
       .setScale(0.7);
     ////////
@@ -752,7 +752,7 @@ export class Game extends Scene {
       markI3.setAlpha(1);
     }
     // Actualizar el texto que muestra la cantidad de ciervos restantes
-    buttonText3.setText("Ciervos = " + ciervosMatar);
+    //buttonText3.setText("Ciervos = " + ciervosMatar);
   }
   /////////////////ELIMINAR CIERVO//////////
   eliminarCiervo(pointer) {
