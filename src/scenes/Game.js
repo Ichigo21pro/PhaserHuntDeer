@@ -137,6 +137,13 @@ export class Game extends Scene {
       repeat: 0, // Repetir la animación 1 vez
     });
     //AnimacionSangre.anims.play('bloodAnimation');
+    //añadimos el sprite de la tierra
+    this.anims.create({
+      key: "dirtAnimation",
+      frames: this.anims.generateFrameNumbers('animacionTierraDisparo', { start: 0, end: 5 }), // Rango de frames en el spritesheet
+      frameRate: 10, // Velocidad de la animación (cuántos frames por segundo)
+      repeat: 0, // Repetir la animación 1 vez
+    });
     ///////////////////////////////////////
 
     // Añadir una barra marrón en la parte inferior
@@ -495,6 +502,18 @@ export class Game extends Scene {
 
     // Establecer la escala de la imagen del ciervo
     ciervo.setScale(scale);
+    /////
+    /////
+    this.input.on('pointerdown', (pointer) => {
+      if (!ciervo.getBounds().contains(pointer.x, pointer.y)) {
+          // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
+          var anim = this.add.sprite(pointer.x, pointer.y, 'dirtAnimation');
+          anim.setScale(0.2); // Ajusta la escala según sea necesario
+          anim.anims.play('dirtAnimation');
+          // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
+          console.log("estoy diparando fuera del ciervo");
+      }
+  });
 
     // Agregar evento de clic a la imagen del ciervo
     ciervo.on('pointerdown', (pointer) => {
@@ -558,6 +577,9 @@ export class Game extends Scene {
         ciervo.destroy();
       }
     });
+
+
+    
   }
 
   ///////////////////ACTUALIZAR TEXTO/////////////
@@ -608,6 +630,8 @@ export class Game extends Scene {
       var anim = this.add.sprite(mouseX, mouseY, 'animacionSangre');
       anim.setScale(0.1); // Ajusta la escala según sea necesario
       anim.anims.play('bloodAnimation');
+      //////////
+      
 
       // Escucha el evento animationcomplete
       anim.on(
@@ -742,10 +766,7 @@ export class Game extends Scene {
       ease: 'Linear',
     });
 
-    // Detectar el clic en el ciervo
-    ciervo.on('pointerdown', () => {
-      // Realizar acciones cuando se hace clic en el ciervo
-    });
+    
 
     // Resaltar la imagen del ciervo cuando se crea
     this.tweens.add({
@@ -829,6 +850,15 @@ export class Game extends Scene {
         mask.destroy();
       }
     });
+    this.input.on('pointerdown', (pointer) => {
+      if (!ciervo.getBounds().contains(pointer.x, pointer.y)) {
+          // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
+          var anim = this.add.sprite(pointer.x, pointer.y, 'dirtAnimation');
+          anim.setScale(0.1); // Ajusta la escala según sea necesario
+          anim.anims.play('dirtAnimation');
+          // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
+      }
+  });
     // Resaltar la imagen del ciervo cuando se crea
     this.tweens.add({
       targets: ciervo,
@@ -1009,5 +1039,14 @@ export class Game extends Scene {
         }, 2000);
       }
     });
+    this.input.on('pointerdown', (pointer) => {
+      if (!ciervoF.getBounds().contains(pointer.x, pointer.y)) {
+          // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
+          var anim = this.add.sprite(pointer.x, pointer.y, 'dirtAnimation');
+          anim.setScale(0.1); // Ajusta la escala según sea necesario
+          anim.anims.play('dirtAnimation');
+          // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
+      }
+  });
   }
 }

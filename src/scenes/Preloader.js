@@ -41,6 +41,7 @@ export class Preloader extends Scene {
     this.load.spritesheet('rifle', 'rifle_V03.png', { frameWidth: 647, frameHeight: 732 });
     this.load.spritesheet('ciervo', 'deer_animation(750x750).png', { frameWidth: 750, frameHeight: 750 });
     this.load.spritesheet('animacionSangreCiervo', 'AnimationBloodDeer.png', { frameWidth: 394, frameHeight: 574 });
+    this.load.spritesheet('animacionTierraDisparo', 'dirtFireAnimation(200x200).png', { frameWidth: 200, frameHeight: 200 });
 
     this.load.image('deer', 'deer.png');
     this.load.image('bloodParticle', 'bloodP.png');
