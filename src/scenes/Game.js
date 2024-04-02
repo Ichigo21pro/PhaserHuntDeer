@@ -620,15 +620,6 @@ export class Game extends Scene {
     ciervo.setScale(scale);
     //añadir tiempo
 
-    var tiempoEspera = setTimeout(() => {
-      if (!seHizoClick) {
-        // Aquí puedes agregar lo que quieres que pase si no se mata al ciervo en 15 segundos
-        this.mostrarMensaje(
-          "tienes que disparar al ciervo, lo sabes verdad?",
-          4000
-        );
-      }
-    }, 7000);
     /////
     /////
     this.input.on("pointerdown", (pointer) => {
@@ -717,6 +708,15 @@ export class Game extends Scene {
         ciervo.destroy();
       }
     });
+    var tiempoEspera = setTimeout(() => {
+      if (!seHizoClick) {
+        // Aquí puedes agregar lo que quieres que pase si no se mata al ciervo en 15 segundos
+        this.mostrarMensaje(
+          "tienes que disparar al ciervo, lo sabes verdad?",
+          4000
+        );
+      }
+    }, 7000);
   }
 
   ///////////////////ACTUALIZAR TEXTO/////////////
