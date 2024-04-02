@@ -45,6 +45,9 @@ var markI2;
 var markI3;
 //
 var AnimacionSangre;
+var seHizoClick = false;
+let inactivo = false;
+var temporizadorAFK;
 
 export class Game extends Scene {
   constructor() {
@@ -419,6 +422,11 @@ export class Game extends Scene {
       this.scope.setPosition(pointer.x, pointer.y);
     });
 
+    // Iniciar el temporizador de inactividad al cargar el juego
+    temporizadorAFK = setTimeout(() => {
+      this.gameOver();
+    }, 20000); // 20 segundos en milisegundos
+
     ///////////////////////////
 
     ////////////////////////////
@@ -446,9 +454,7 @@ export class Game extends Scene {
     });*/
     /////////////////
     // Añadir un evento de clic del ratón para cambiar a la escena de Gameover
-    this.input.on("pointerdown", () => {
-      //this.gameOver();
-    });
+
     ////////////////
   }
   ///////////// UPDATE ///////////
@@ -456,6 +462,11 @@ export class Game extends Scene {
     if (gameOver) {
       return;
     }
+
+    this.input.on("pointerdown", () => {
+      inactivo = false;
+      this.reiniciarTemporizador();
+    });
 
     if (tutorial) {
       this.tutorial();
@@ -608,8 +619,6 @@ export class Game extends Scene {
     // Establecer la escala de la imagen del ciervo
     ciervo.setScale(scale);
     //añadir tiempo
-    // se hizo click?
-    var seHizoClick = false;
 
     var tiempoEspera = setTimeout(() => {
       if (!seHizoClick) {
@@ -1222,5 +1231,13 @@ export class Game extends Scene {
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
       }
     });
+  }
+  ////////////////////////
+  // Función para reiniciar el temporizador de inactividad
+  reiniciarTemporizador() {
+    clearTimeout(temporizadorAFK);
+    temporizadorAFK = setTimeout(() => {
+      this.gameOver();
+    }, 20000); // 20 segundos en milisegundos
   }
 }
