@@ -48,6 +48,10 @@ var AnimacionSangre;
 var seHizoClick = false;
 let inactivo = false;
 var temporizadorAFK;
+//
+var maskGraphicsScope;
+var maskScope;
+var blackOverlay;
 
 export class Game extends Scene {
   constructor() {
@@ -85,7 +89,6 @@ export class Game extends Scene {
 
     // Detectar la tecla B presionada
     const keyB = this.input.keyboard.addKey("B");
-    var blackOverlay;
 
     keyB.on("down", () => {
       // Agregar un rectángulo negro que cubra toda la pantalla
@@ -299,15 +302,37 @@ export class Game extends Scene {
 
       if (apuntar) {
         // Agregar un rectángulo negro que cubra toda la pantalla
-        blackOverlay = this.add.rectangle(
-          0,
-          0,
-          this.cameras.main.width,
-          this.cameras.main.height,
-          0x000000,
-          0.5
+        blackOverlay = this.add.graphics();
+        blackOverlay.fillStyle(0x000000, 0.8).fillRect(0, 0, 1024, 683);
+
+        ////añadir mascara
+        // Crear una gráfica para la máscara circular
+        maskGraphicsScope = this.make.graphics();
+
+        // Definir la posición y el radio del círculo
+        const circleX = this.cameras.main.width / 2; // Posición x del círculo (centro del canvas)
+        const circleY = this.cameras.main.height / 2; // Posición y del círculo (centro del canvas)
+        const circleRadius = 120; // Radio del círculo
+
+        // Dibujar un círculo en la gráfica
+        maskGraphicsScope.fillStyle(0xffffff); // Color blanco para el círculo (la máscara oculta lo que no es blanco)
+        maskGraphicsScope.fillCircle(circleX, circleY, circleRadius);
+
+        // Crear una máscara a partir de la gráfica circular
+        maskScope = new Phaser.Display.Masks.BitmapMask(
+          this,
+          maskGraphicsScope
         );
-        blackOverlay.setOrigin(0);
+        maskScope.invertAlpha = true;
+
+        // Aplicar la máscara al rectángulo negro
+        blackOverlay.setMask(maskScope);
+
+        ////
+        ////
+
+        ///////
+        //blackOverlay.setOrigin(0);
 
         // Iniciar la animación para aumentar la escala al apuntar
         this.scope.setScale(0.7);
@@ -368,27 +393,27 @@ export class Game extends Scene {
       .setScale(0.5);
     markI1 = this.add
       .sprite(button6.x - 90, button6.y, "deerScoreInactive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     markI2 = this.add
       .sprite(button6.x, button6.y, "deerScoreInactive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     markI3 = this.add
       .sprite(button6.x + 90, button6.y, "deerScoreInactive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     markA1 = this.add
       .sprite(button6.x - 90, button6.y, "deerScoreActive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     markA2 = this.add
       .sprite(button6.x, button6.y, "deerScoreActive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     markA3 = this.add
       .sprite(button6.x + 90, button6.y, "deerScoreActive")
-      .setOrigin(-1.4, 8.45)
+      .setOrigin(-1.4, 0.2)
       .setScale(0.7);
     ////////
 
@@ -462,6 +487,12 @@ export class Game extends Scene {
     if (gameOver) {
       return;
     }
+
+    this.input.on("pointermove", (pointer) => {
+      if (apuntar) {
+        this.updateMaskPosition(pointer);
+      }
+    });
 
     this.input.on("pointerdown", () => {
       inactivo = false;
@@ -1239,5 +1270,18 @@ export class Game extends Scene {
     temporizadorAFK = setTimeout(() => {
       this.gameOver();
     }, 20000); // 20 segundos en milisegundos
+  }
+  ////////////////////
+  // Función para actualizar la posición de la máscara circular
+  updateMaskPosition(pointer) {
+    // Actualizar la posición del círculo de la máscara
+    maskGraphicsScope.clear(); // Limpiar la máscara para actualizarla
+    maskGraphicsScope.fillStyle(0xffffff); // Color blanco para el círculo
+    maskGraphicsScope.fillCircle(pointer.x, pointer.y, 120); // Dibujar el círculo en la posición del puntero
+
+    // Actualizar la máscara con la nueva gráfica
+    maskScope = new Phaser.Display.Masks.BitmapMask(this, maskGraphicsScope);
+    maskScope.invertAlpha = true;
+    blackOverlay.setMask(maskScope); // Aplicar la máscara al rectángulo negro
   }
 }
