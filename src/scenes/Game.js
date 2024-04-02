@@ -496,6 +496,8 @@ export class Game extends Scene {
 
     this.input.on("pointerdown", () => {
       inactivo = false;
+      inactivo = true;
+
       this.reiniciarTemporizador();
     });
 
@@ -663,9 +665,11 @@ export class Game extends Scene {
       //si se clickea fuer del parametro del ciervo
       if (!ciervo.getBounds().contains(pointer.x, pointer.y)) {
         // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
-        var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
-        anim.setScale(0.2); // Ajusta la escala según sea necesario
-        anim.anims.play("dirtAnimation");
+        if (pointer.y < this.scale.gameSize.height - 85) {
+          var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
+          anim.setScale(0.2); // Ajusta la escala según sea necesario
+          anim.anims.play("dirtAnimation");
+        }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
         //console.log("estoy diparando fuera del ciervo");
       }
@@ -1025,9 +1029,11 @@ export class Game extends Scene {
     this.input.on("pointerdown", (pointer) => {
       if (!ciervo.getBounds().contains(pointer.x, pointer.y)) {
         // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
-        var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
-        anim.setScale(0.1); // Ajusta la escala según sea necesario
-        anim.anims.play("dirtAnimation");
+        if (pointer.y < this.scale.gameSize.height - 85) {
+          var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
+          anim.setScale(0.2); // Ajusta la escala según sea necesario
+          anim.anims.play("dirtAnimation");
+        }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
       }
     });
@@ -1256,9 +1262,11 @@ export class Game extends Scene {
     this.input.on("pointerdown", (pointer) => {
       if (!ciervoF.getBounds().contains(pointer.x, pointer.y)) {
         // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
-        var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
-        anim.setScale(0.1); // Ajusta la escala según sea necesario
-        anim.anims.play("dirtAnimation");
+        if (pointer.y < this.scale.gameSize.height - 85) {
+          var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
+          anim.setScale(0.2); // Ajusta la escala según sea necesario
+          anim.anims.play("dirtAnimation");
+        }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
       }
     });
@@ -1269,7 +1277,7 @@ export class Game extends Scene {
     clearTimeout(temporizadorAFK);
     temporizadorAFK = setTimeout(() => {
       this.gameOver();
-    }, 20000); // 20 segundos en milisegundos
+    }, 30000); // 20 segundos en milisegundos
   }
   ////////////////////
   // Función para actualizar la posición de la máscara circular
