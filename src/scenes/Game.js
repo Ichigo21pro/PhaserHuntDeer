@@ -45,13 +45,15 @@ var markI2;
 var markI3;
 //
 var AnimacionSangre;
-var seHizoClick = false;
-let inactivo = false;
+//let inactivo = false;
 var temporizadorAFK;
 //
 var maskGraphicsScope;
 var maskScope;
 var blackOverlay;
+//
+var CTAecho = false;
+var tiempoEspera;
 
 export class Game extends Scene {
   constructor() {
@@ -424,9 +426,7 @@ export class Game extends Scene {
     });
 
     // Iniciar el temporizador de inactividad al cargar el juego
-    temporizadorAFK = setTimeout(() => {
-      this.gameOver();
-    }, 20000); // 20 segundos en milisegundos
+    this.reiniciarTemporizador();
 
     ///////////////////////////
 
@@ -437,9 +437,6 @@ export class Game extends Scene {
     });
 
     this.input.on("pointerdown", () => {
-      inactivo = false;
-      inactivo = true;
-
       this.reiniciarTemporizador();
     });
 
@@ -642,12 +639,6 @@ export class Game extends Scene {
     /////
     /////
     this.input.on("pointerdown", (pointer) => {
-      //si no se hace click
-      clearTimeout(tiempoEspera);
-      seHizoClick = true;
-      setTimeout(() => {
-        seHizoClick = false;
-      }, 5000);
       //si se clickea fuer del parametro del ciervo
       if (!ciervo.getBounds().contains(pointer.x, pointer.y)) {
         // Si el clic no está dentro de los límites del ciervo, significa que no se hizo clic en el ciervo
@@ -747,15 +738,6 @@ export class Game extends Scene {
         ciervo.destroy();
       }
     });
-    var tiempoEspera = setTimeout(() => {
-      if (!seHizoClick) {
-        // Aquí puedes agregar lo que quieres que pase si no se mata al ciervo en 15 segundos
-        this.mostrarMensaje(
-          "tienes que disparar al ciervo, lo sabes verdad?",
-          4000
-        );
-      }
-    }, 7000);
   }
 
   ///////////////////ACTUALIZAR TEXTO/////////////
@@ -795,6 +777,7 @@ export class Game extends Scene {
   }
   /////////////////ELIMINAR CIERVO//////////
   eliminarCiervo(pointer) {
+    this.reiniciarTemporizador();
     // Obtener la posición del ratón en el momento del clic
     const mouseX = pointer.x;
     const mouseY = pointer.y;
@@ -834,12 +817,16 @@ export class Game extends Scene {
 
   //////////////////// GAME OVER /////////////////
   gameOver() {
-    // Cambiar a la escena de Gameover y pasar la puntuación y el tiempo como datos
-    this.scene.start("GameOver");
+    if (!CTAecho) {
+      // Cambiar a la escena de Gameover y pasar la puntuación y el tiempo como datos
+      this.scene.start("GameOver");
 
-    cantidadBalas = 3;
-    ciervosMatar = 3;
-    tutorial = true;
+      cantidadBalas = 3;
+      ciervosMatar = 3;
+      tutorial = true;
+
+      CTAecho = true;
+    }
   }
   ///////////// actualizar ciervos /////
   actualizarCiervos() {
@@ -1326,15 +1313,49 @@ export class Game extends Scene {
       }
     });
   }
+
   ////////////////////////
   // Función para reiniciar el temporizador de inactividad
   reiniciarTemporizador() {
-    clearTimeout(temporizadorAFK);
+    //clearTimeout(tiempoEspera);
+    //if (tiempoEspera) tiempoEspera.remove();
+
+    /*tiempoEspera = setTimeout(() => {
+      if (!seHizoClick) {
+        // Aquí puedes agregar lo que quieres que pase si no se mata al ciervo en 15 segundos
+        this.mostrarMensaje(
+          "tienes que disparar al ciervo, lo sabes verdad?",
+          4000
+        );
+      }
+    }, 7000);*/
+
+    if (tiempoEspera) tiempoEspera.remove();
+
+    tiempoEspera = this.time.delayedCall(7000, () => {
+      // Aquí puedes agregar lo que quieres que pase si no se mata al ciervo en 15 segundos
+      this.mostrarMensaje(
+        "tienes que disparar al ciervo, lo sabes verdad?",
+        4000
+      );
+    });
+    //////
+    console.log("Game - reiniciarTemporizador()");
+    // prefiero comentarlo para tenerlo de referencia :)
+    /* clearTimeout(temporizadorAFK);
     temporizadorAFK = setTimeout(() => {
       this.gameOver();
       gameOver = true;
-    }, 30000); // 20 segundos en milisegundos
+    }, 30000); // 20 segundos en milisegundos*/
+
+    // Te cambio lo de temporizadorAFK:
+    if (temporizadorAFK) temporizadorAFK.remove();
+    temporizadorAFK = this.time.delayedCall(30000, () => {
+      this.gameOver();
+      gameOver = true;
+    });
   }
+
   ////////////////////
   // Función para actualizar la posición de la máscara circular
   updateMaskPosition(pointer) {
