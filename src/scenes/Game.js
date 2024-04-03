@@ -1354,7 +1354,7 @@ export class Game extends Scene {
       );
     });
     //////
-    console.log("Game - reiniciarTemporizador()");
+    // console.log("Game - reiniciarTemporizador()");
     // prefiero comentarlo para tenerlo de referencia :)
     /* clearTimeout(temporizadorAFK);
     temporizadorAFK = setTimeout(() => {
@@ -1427,8 +1427,6 @@ export class Game extends Scene {
       overlayGirarPantalla.setDepth(4);
       // Bloquear todas las interacciones de entrada
 
-      this.input.enabled = false;
-      bloqueoInput = true;
       // Pausar la escena para congelar el juego
       //this.scene.pause();
       // this.input.mouse.disable = true;
@@ -1436,12 +1434,16 @@ export class Game extends Scene {
     } else {
       overlayGirarPantalla.setVisible(true); // Hacer visible el overlay
     }
+    this.input.enabled = false;
+    bloqueoInput = true;
+    console.log("se pone la mascara");
   }
 
   removeOrientationOverlay() {
     // Ocultar el mensaje y el overlay
     if (mensajeGirarPantalla) mensajeGirarPantalla.setVisible(false);
     if (overlayGirarPantalla) overlayGirarPantalla.setVisible(false);
+    console.log("ya no hay mascara");
 
     // Restablecer las interacciones de entrada
     this.input.enabled = true;
