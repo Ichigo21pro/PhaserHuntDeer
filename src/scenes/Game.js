@@ -1107,6 +1107,11 @@ export class Game extends Scene {
       backgroundHeight
     );
 
+    // Ajusta la profundidad del texto y del fondo para que estén por encima de cualquier otro sprite
+    texto.setDepth(2);
+    this.scope.setDepth(1);
+    background.setDepth(2);
+
     // Establece la variable de estado del mensaje como activa
     mensajeActivo = true;
 
