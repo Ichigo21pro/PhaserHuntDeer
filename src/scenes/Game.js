@@ -302,6 +302,8 @@ export class Game extends Scene {
         // Aplicar la máscara al rectángulo negro
         blackOverlay.setMask(maskScope);
 
+        blackOverlay.setDepth(2);
+
         ////
         ////
 
