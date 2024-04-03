@@ -1385,10 +1385,46 @@ export class Game extends Scene {
     // Verificar la orientación del dispositivo
     if (width > height) {
       // Landscape
-      this.scale.setGameSize(1024, 683); // Establecer el tamaño del juego en horizontal
+      this.removeOrientationOverlay();
     } else {
       // Portrait
-      this.scale.setGameSize(683, 1024); // Establecer el tamaño del juego en vertical
+      this.showOrientationOverlay();
     }
+  }
+
+  showOrientationOverlay() {
+    // Mostrar el mensaje
+    const mensaje = this.add.text(
+      this.scale.gameSize.width / 2,
+      this.scale.gameSize.height / 2,
+      "Gira la pantalla",
+      { fontFamily: "Arial", fontSize: "24px", fill: "#ffffff" }
+    );
+    mensaje.setOrigin(0.5);
+
+    // Crear el overlay negro
+    const overlay = this.add.graphics();
+    overlay.fillStyle(0x000000, 0.8);
+    overlay.fillRect(
+      0,
+      0,
+      this.scale.gameSize.width,
+      this.scale.gameSize.height
+    );
+
+    // Mantener el mensaje y el overlay en la parte superior
+    mensaje.setDepth(5);
+    overlay.setDepth(4);
+  }
+
+  removeOrientationOverlay() {
+    // Eliminar el mensaje y el overlay
+    this.children.each((child) => {
+      if (child instanceof Phaser.GameObjects.Text) {
+        child.destroy();
+      } else if (child instanceof Phaser.GameObjects.Graphics) {
+        child.destroy();
+      }
+    });
   }
 }
