@@ -628,7 +628,8 @@ export class Game extends Scene {
 
     // Establecer la escala de la imagen del ciervo
     ciervo.setScale(scale);
-    //añadir tiempo
+    //añadir animacionde respiracion
+    // Resaltar la imagen del ciervo cuando se crea
 
     /////
     /////
