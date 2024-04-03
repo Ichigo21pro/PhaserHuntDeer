@@ -1426,8 +1426,13 @@ export class Game extends Scene {
       );
       overlayGirarPantalla.setDepth(4);
       // Bloquear todas las interacciones de entrada
+
       this.input.enabled = false;
       bloqueoInput = true;
+      // Pausar la escena para congelar el juego
+      //this.scene.pause();
+      // this.input.mouse.disable = true;
+      // this.input.keyboard.disable = true;
     } else {
       overlayGirarPantalla.setVisible(true); // Hacer visible el overlay
     }
@@ -1441,5 +1446,9 @@ export class Game extends Scene {
     // Restablecer las interacciones de entrada
     this.input.enabled = true;
     bloqueoInput = false;
+    // Reanudar la escena para reactivar el juego
+    //this.scene.resume();
+    //this.input.mouse.disable = false;
+    //this.input.keyboard.disable = false;
   }
 }
