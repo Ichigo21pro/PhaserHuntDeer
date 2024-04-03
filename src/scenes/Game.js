@@ -430,6 +430,19 @@ export class Game extends Scene {
 
     ///////////////////////////
 
+    this.input.on("pointermove", (pointer) => {
+      if (apuntar) {
+        this.updateMaskPosition(pointer);
+      }
+    });
+
+    this.input.on("pointerdown", () => {
+      inactivo = false;
+      inactivo = true;
+
+      this.reiniciarTemporizador();
+    });
+
     ////////////////////////////
 
     /*// Definir los límites de movimiento del rifle
@@ -463,19 +476,6 @@ export class Game extends Scene {
     if (gameOver) {
       return;
     }
-
-    this.input.on("pointermove", (pointer) => {
-      if (apuntar) {
-        this.updateMaskPosition(pointer);
-      }
-    });
-
-    this.input.on("pointerdown", () => {
-      inactivo = false;
-      inactivo = true;
-
-      this.reiniciarTemporizador();
-    });
 
     if (tutorial) {
       this.tutorial();
