@@ -1413,8 +1413,8 @@ export class Game extends Scene {
     );
 
     // Mantener el mensaje y el overlay en la parte superior
-    mensaje.setDepth(5);
-    overlay.setDepth(4);
+    mensaje.setDepth(1);
+    overlay.setDepth(0);
   }
 
   removeOrientationOverlay() {
