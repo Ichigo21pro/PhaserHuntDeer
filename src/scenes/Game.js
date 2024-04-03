@@ -644,6 +644,24 @@ export class Game extends Scene {
           var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
           anim.setScale(0.2); // Ajusta la escala según sea necesario
           anim.anims.play("dirtAnimation");
+          // Tween para dejar el humo activo durante 1 segundo
+          this.tweens.add({
+            targets: anim,
+            alpha: 1, // Opacidad máxima
+            duration: 1000, // Duración de 1 segundo
+            onComplete: function () {
+              // Tween para reducir gradualmente la opacidad del humo hasta 0
+              this.tweens.add({
+                targets: anim,
+                alpha: 0, // Opacidad mínima
+                duration: 1000, // Duración de 1 segundo
+                onComplete: function () {
+                  // Una vez que la opacidad llega a 0, destruir el sprite del humo
+                  anim.destroy();
+                },
+              });
+            }.bind(this), // Importante para mantener el contexto de 'this'
+          });
         }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
         //console.log("estoy diparando fuera del ciervo");
@@ -1008,6 +1026,24 @@ export class Game extends Scene {
           var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
           anim.setScale(0.2); // Ajusta la escala según sea necesario
           anim.anims.play("dirtAnimation");
+          // Tween para dejar el humo activo durante 1 segundo
+          this.tweens.add({
+            targets: anim,
+            alpha: 1, // Opacidad máxima
+            duration: 1000, // Duración de 1 segundo
+            onComplete: function () {
+              // Tween para reducir gradualmente la opacidad del humo hasta 0
+              this.tweens.add({
+                targets: anim,
+                alpha: 0, // Opacidad mínima
+                duration: 1000, // Duración de 1 segundo
+                onComplete: function () {
+                  // Una vez que la opacidad llega a 0, destruir el sprite del humo
+                  anim.destroy();
+                },
+              });
+            }.bind(this), // Importante para mantener el contexto de 'this'
+          });
         }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
       }
@@ -1241,6 +1277,24 @@ export class Game extends Scene {
           var anim = this.add.sprite(pointer.x, pointer.y, "dirtAnimation");
           anim.setScale(0.2); // Ajusta la escala según sea necesario
           anim.anims.play("dirtAnimation");
+          // Tween para dejar el humo activo durante 1 segundo
+          this.tweens.add({
+            targets: anim,
+            alpha: 1, // Opacidad máxima
+            duration: 1000, // Duración de 1 segundo
+            onComplete: function () {
+              // Tween para reducir gradualmente la opacidad del humo hasta 0
+              this.tweens.add({
+                targets: anim,
+                alpha: 0, // Opacidad mínima
+                duration: 1000, // Duración de 1 segundo
+                onComplete: function () {
+                  // Una vez que la opacidad llega a 0, destruir el sprite del humo
+                  anim.destroy();
+                },
+              });
+            }.bind(this), // Importante para mantener el contexto de 'this'
+          });
         }
         // Aquí puedes agregar cualquier otra lógica que necesites para el caso en que no se haga clic en el ciervo
       }
