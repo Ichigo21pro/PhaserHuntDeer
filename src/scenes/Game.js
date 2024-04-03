@@ -70,7 +70,13 @@ export class Game extends Scene {
     //cursors.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     //cursors.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     //cursors.B = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+    // Agregar un listener para el evento window.resize
+    window.addEventListener("resize", () => {
+      this.checkOrientation();
+    });
 
+    // Llamar a la función checkOrientation() una vez al inicio
+    this.checkOrientation();
     //////////////
     //////////
     //////
@@ -863,6 +869,7 @@ export class Game extends Scene {
   }
   ///////////////TUTORIAL/////////////
   tutorial() {
+    this.mostrarMensaje("Recuerda apuntar pulsando el boton", 2000);
     // Agregar un rectángulo negro que cubra toda la pantalla
     //const blackOverlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.7);
     //blackOverlay.setOrigin(0);
@@ -1368,5 +1375,20 @@ export class Game extends Scene {
     maskScope = new Phaser.Display.Masks.BitmapMask(this, maskGraphicsScope);
     maskScope.invertAlpha = true;
     blackOverlay.setMask(maskScope); // Aplicar la máscara al rectángulo negro
+  }
+  /////////////////////////CHECKORIENTATION////////////////
+  checkOrientation() {
+    // Obtener las dimensiones de la ventana
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Verificar la orientación del dispositivo
+    if (width > height) {
+      // Landscape
+      this.scale.setGameSize(1024, 683); // Establecer el tamaño del juego en horizontal
+    } else {
+      // Portrait
+      this.scale.setGameSize(683, 1024); // Establecer el tamaño del juego en vertical
+    }
   }
 }
