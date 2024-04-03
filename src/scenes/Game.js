@@ -630,6 +630,14 @@ export class Game extends Scene {
     ciervo.setScale(scale);
     //añadir animacionde respiracion
     // Resaltar la imagen del ciervo cuando se crea
+    this.tweens.add({
+      targets: ciervo,
+      scaleX: scale * 1.07, // Aumentar el tamaño en el eje x
+      scaleY: scale * 1.07, // Aumentar el tamaño en el eje y
+      duration: 500, // Duración de la animación en milisegundos
+      yoyo: true, // Hacer que la animación se revierta automáticamente
+      repeat: -1, // Repetir la animación indefinidamente
+    });
 
     /////
     /////
@@ -1148,6 +1156,16 @@ export class Game extends Scene {
       .image(500, 350, "deer")
       .setInteractive({ pixelPerfect: true });
     ciervoF.setScale(0.1);
+
+    //aniamcion de respirar
+    this.tweens.add({
+      targets: ciervoF,
+      scaleX: 0.15, // Aumentar el tamaño en el eje x
+      scaleY: 0.15, // Aumentar el tamaño en el eje y
+      duration: 500, // Duración de la animación en milisegundos
+      yoyo: true, // Hacer que la animación se revierta automáticamente
+      repeat: -1, // Repetir la animación indefinidamente
+    });
 
     // Mostrar un mensaje indicando que es el último ciervo y la última bala
     this.mostrarMensaje("Último ciervo, última bala", 2000);
