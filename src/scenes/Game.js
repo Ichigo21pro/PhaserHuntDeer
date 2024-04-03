@@ -2,6 +2,11 @@ import { Scene } from "phaser";
 
 var gameOver = false;
 
+//
+var mensajeGirarPantalla;
+var overlayGirarPantalla;
+let bloqueoInput = false;
+//
 var fondo;
 var scoreTime;
 var tiempo = 0;
@@ -54,6 +59,8 @@ var blackOverlay;
 //
 var CTAecho = false;
 var tiempoEspera;
+//
+var buttonText2;
 
 export class Game extends Scene {
   constructor() {
@@ -201,7 +208,7 @@ export class Game extends Scene {
         this.mostrarMensaje("Ya no veras las animaciones de sangre", 2000);
       }
     });
-    const buttonText2 = this.add
+    buttonText2 = this.add
       .text(button2.x, button2.y, "VIEWBLOOD", {
         fontFamily: "Madimi One",
         fontSize: "30px",
@@ -1391,40 +1398,48 @@ export class Game extends Scene {
       this.showOrientationOverlay();
     }
   }
-
   showOrientationOverlay() {
-    // Mostrar el mensaje
-    const mensaje = this.add.text(
-      this.scale.gameSize.width / 2,
-      this.scale.gameSize.height / 2,
-      "Gira la pantalla",
-      { fontFamily: "Arial", fontSize: "24px", fill: "#ffffff" }
-    );
-    mensaje.setOrigin(0.5);
+    // Verificar si ya se ha creado el mensaje y el overlay
+    if (!mensajeGirarPantalla) {
+      // Mostrar el mensaje
+      mensajeGirarPantalla = this.add.text(
+        this.scale.gameSize.width / 2,
+        this.scale.gameSize.height / 2,
+        "Gira la pantalla",
+        { fontFamily: "Arial", fontSize: "24px", fill: "#ffffff" }
+      );
+      mensajeGirarPantalla.setOrigin(0.5);
+      mensajeGirarPantalla.setDepth(5);
+    } else {
+      mensajeGirarPantalla.setVisible(true); // Hacer visible el mensaje
+    }
 
-    // Crear el overlay negro
-    const overlay = this.add.graphics();
-    overlay.fillStyle(0x000000, 0.8);
-    overlay.fillRect(
-      0,
-      0,
-      this.scale.gameSize.width,
-      this.scale.gameSize.height
-    );
-
-    // Mantener el mensaje y el overlay en la parte superior
-    mensaje.setDepth(1);
-    overlay.setDepth(0);
+    if (!overlayGirarPantalla) {
+      // Crear el overlay negro
+      overlayGirarPantalla = this.add.graphics();
+      overlayGirarPantalla.fillStyle(0x000000, 1);
+      overlayGirarPantalla.fillRect(
+        0,
+        0,
+        this.scale.gameSize.width,
+        this.scale.gameSize.height
+      );
+      overlayGirarPantalla.setDepth(4);
+      // Bloquear todas las interacciones de entrada
+      this.input.enabled = false;
+      bloqueoInput = true;
+    } else {
+      overlayGirarPantalla.setVisible(true); // Hacer visible el overlay
+    }
   }
 
   removeOrientationOverlay() {
-    // Eliminar el mensaje y el overlay
-    this.children.each((child) => {
-      if (child instanceof Phaser.GameObjects.Text) {
-        child.destroy();
-      } else if (child instanceof Phaser.GameObjects.Graphics) {
-        child.destroy();
-      }
-    });
+    // Ocultar el mensaje y el overlay
+    if (mensajeGirarPantalla) mensajeGirarPantalla.setVisible(false);
+    if (overlayGirarPantalla) overlayGirarPantalla.setVisible(false);
+
+    // Restablecer las interacciones de entrada
+    this.input.enabled = true;
+    bloqueoInput = false;
   }
 }
